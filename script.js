@@ -1,5 +1,23 @@
 // Disappearing header functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Set current date
+    function setCurrentDate() {
+        const dateElement = document.querySelector('.date');
+        if (dateElement) {
+            const today = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const formattedDate = today.toLocaleDateString('en-US', options);
+            dateElement.textContent = formattedDate;
+        }
+    }
+    
+    // Initialize current date
+    setCurrentDate();
+    
     const header = document.getElementById('main-header');
     let lastScrollTop = 0;
     let scrollThreshold = 50; // Minimum scroll distance before hiding header
