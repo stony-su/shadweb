@@ -1,0 +1,316 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', serif;
+    line-height: 1.4;
+    color: #000;
+    background-color: #f5f5f5;
+    font-size: 12px;
+    max-width: 320px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+/* Header styles with disappearing animation */
+.header {
+    background: #1a1a1a;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.header.hidden {
+    transform: translateX(-50%) translateY(-100%);
+}
+
+.header-content {
+    padding: 8px 10px;
+    border-bottom: 2px solid #333;
+}
+
+.newspaper-title h1 {
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 2px;
+}
+
+.subtitle {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    text-align: center;
+    color: #ccc;
+    letter-spacing: 1px;
+}
+
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    margin-top: 4px;
+    color: #ccc;
+}
+
+.nav-menu {
+    display: flex;
+    background: #333;
+    padding: 4px 0;
+}
+
+.nav-menu a {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 8px;
+    font-weight: bold;
+    padding: 4px 2px;
+    border-right: 1px solid #555;
+    transition: background-color 0.2s;
+}
+
+.nav-menu a:last-child {
+    border-right: none;
+}
+
+.nav-menu a:hover {
+    background: #555;
+}
+
+/* Main content */
+.content {
+    margin-top: 80px; /* Space for fixed header */
+    padding: 10px;
+    min-height: calc(100vh - 80px);
+}
+
+/* Front page styles */
+.front-page {
+    margin-bottom: 20px;
+}
+
+.main-story h2 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    line-height: 1.2;
+    color: #1a1a1a;
+    border-bottom: 2px solid #000;
+    padding-bottom: 4px;
+}
+
+.story-meta {
+    font-size: 8px;
+    color: #666;
+    margin-bottom: 8px;
+    display: flex;
+    gap: 10px;
+}
+
+.lead-paragraph {
+    font-weight: bold;
+    font-size: 11px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.main-story p {
+    font-size: 10px;
+    margin-bottom: 6px;
+    text-align: justify;
+}
+
+/* Sidebar */
+.sidebar {
+    margin-top: 15px;
+    border-top: 2px solid #000;
+    padding-top: 10px;
+}
+
+.weather-widget, .quick-news {
+    margin-bottom: 15px;
+}
+
+.weather-widget h3, .quick-news h3 {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    background: #f0f0f0;
+    padding: 3px 6px;
+    border-left: 3px solid #000;
+}
+
+.weather-info {
+    font-size: 9px;
+}
+
+.temp {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.condition, .forecast {
+    margin-bottom: 2px;
+}
+
+.quick-news ul {
+    list-style: none;
+    font-size: 9px;
+}
+
+.quick-news li {
+    margin-bottom: 4px;
+    padding-left: 8px;
+    position: relative;
+}
+
+.quick-news li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #000;
+}
+
+/* Section headers */
+section h2 {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    padding: 6px 8px;
+    background: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* News items */
+.news-item, .sports-item {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.news-item h3, .sports-item h3 {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #1a1a1a;
+}
+
+.news-item p, .sports-item p {
+    font-size: 9px;
+    text-align: justify;
+}
+
+/* Classifieds */
+.classified-grid {
+    display: grid;
+    gap: 8px;
+}
+
+.classified-item {
+    border: 1px solid #ccc;
+    padding: 6px;
+    background: #f9f9f9;
+}
+
+.classified-item h4 {
+    font-size: 9px;
+    font-weight: bold;
+    margin-bottom: 3px;
+    color: #1a1a1a;
+    text-transform: uppercase;
+}
+
+.classified-item p {
+    font-size: 8px;
+    line-height: 1.3;
+}
+
+/* Footer */
+.footer {
+    background: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 8px;
+}
+
+.footer-content p {
+    margin-bottom: 3px;
+}
+
+/* Responsive adjustments for flip phone */
+@media (max-width: 320px) {
+    body {
+        width: 100%;
+        font-size: 11px;
+    }
+    
+    .header {
+        width: 100%;
+    }
+    
+    .content {
+        padding: 8px;
+    }
+    
+    .newspaper-title h1 {
+        font-size: 14px;
+    }
+    
+    .main-story h2 {
+        font-size: 12px;
+    }
+    
+    .lead-paragraph {
+        font-size: 10px;
+    }
+}
+
+/* Print styles for newspaper feel */
+@media print {
+    .header {
+        position: static;
+        transform: none;
+    }
+    
+    .content {
+        margin-top: 0;
+    }
+    
+    body {
+        background: #fff;
+        color: #000;
+    }
+}
+
+/* Retro newspaper texture effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 1px 1px, rgba(0,0,0,0.02) 1px, transparent 0);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: -1;
+} 
