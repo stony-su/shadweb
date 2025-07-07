@@ -3,46 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shad Archives - Waterloo 2025</title>
+    <title>Shad Newspapers Archive - Waterloo 2025</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman:ital,wght@0,400;0,700;1,400&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .archive-container {
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        .archive-header {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .archive-header h1 {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        
+        .archive-header .subtitle {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: #ccc;
+            letter-spacing: 1px;
+        }
+        
+        .newspapers-section {
+            margin-bottom: 20px;
+        }
+        
+        .newspapers-section h2 {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 6px 8px;
+            background: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
+        .newspaper-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .newspaper-link {
+            display: block;
+            padding: 8px 10px;
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: #333;
+            font-size: 11px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        
+        .newspaper-link:hover {
+            background: #e0e0e0;
+        }
+        
+        .pictures-section {
+            margin-bottom: 20px;
+        }
+        
+        .pictures-section h2 {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 6px 8px;
+            background: #1a1a1a;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        
+        .pictures-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        
+        .picture-item {
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: #f8f8f8;
+            text-align: center;
+        }
+        
+        .picture-item.small {
+            grid-column: span 1;
+        }
+        
+        .picture-item.medium {
+            grid-column: span 2;
+        }
+        
+        .picture-item.large {
+            grid-column: span 2;
+        }
+        
+        .picture-placeholder {
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+            background-size: 10px 10px;
+            background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: #666;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .picture-item.small .picture-placeholder {
+            height: 40px;
+        }
+        
+        .picture-item.medium .picture-placeholder {
+            height: 60px;
+        }
+        
+        .picture-item.large .picture-placeholder {
+            height: 80px;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .back-link:hover {
+            background: #333;
+        }
+    </style>
 </head>
-
 <body>
-    <header id="main-header" class="header">
-        <div class="header-content">
-            <div class="newspaper-title">
-                <h1>SHAD DAILY</h1>
-                <div class="subtitle">SHAD WATERLOO</div>
-            </div>
-            <div class="header-info">
-                <div class="date">December 15, 2025</div>
-                <div class="price">25¢</div>
-            </div>
-        </div>
-        <nav class="nav-menu">
-            <a href="#front-page">FRONT PAGE</a>
-            <a href="#sNews">SHAD NEWS</a>
-            <a href="#sports">MEDIA</a>
-            <a href="#classifieds">CLASSIFIEDS</a>
-            <a href="#local">ARCHIVE</a>
-        </nav>
-    </header>
+    <div class="archive-container">
+        <header class="archive-header">
+            <h1>SHAD DAILY ARCHIVE</h1>
+            <div class="subtitle">SHAD WATERLOO</div>
+        </header>
 
-    <main class="content">
-        <section class="FRONT PAGE" id="front">
-                <h2>MAIN</h2>
-                <p>Click <a href="index.html">here</a> to return to the main page.</p>
-        </section>
-    </main>
+        <main>
+            <section class="newspapers-section">
+                <h2>PREVIOUS EDITIONS</h2>
+                <div class="newspaper-links">
+                    <a href="past news/July 8th.html" class="newspaper-link">
+                        July 8th, 2025 - SHAD DAILY
+                    </a>
+                    <a href="#" class="newspaper-link">
+                        July 7th, 2025 - SHAD DAILY
+                    </a>
+                    <a href="#" class="newspaper-link">
+                        July 6th, 2025 - SHAD DAILY
+                    </a>
+                    <a href="#" class="newspaper-link">
+                        July 5th, 2025 - SHAD DAILY
+                    </a>
+                    <a href="#" class="newspaper-link">
+                        July 4th, 2025 - SHAD DAILY
+                    </a>
+                    <a href="#" class="newspaper-link">
+                        July 3rd, 2025 - SHAD DAILY
+                    </a>
+                    <a href="#" class="newspaper-link">
+                        July 2nd, 2025 - SHAD DAILY
+                    </a>
+                    <a href="#" class="newspaper-link">
+                        July 1st, 2025 - SHAD DAILY
+                    </a>
+                </div>
+            </section>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2025 Shad Newspapers. All rights reserved.</p>
-            <p>Printed in Waterloo, Ontario, Canada</p>
-        </div>
-    </footer>
+            <section class="pictures-section">
+                <h2>PHOTO ARCHIVE</h2>
+                <div class="pictures-grid">
+                    <div class="picture-item small">
+                        <div class="picture-placeholder">SHAD GROUP PHOTO</div>
+                    </div>
+                    <div class="picture-item small">
+                        <div class="picture-placeholder">WORKSHOP SESSION</div>
+                    </div>
+                    <div class="picture-item medium">
+                        <div class="picture-placeholder">CAMPUS VIEW</div>
+                    </div>
+                    <div class="picture-item small">
+                        <div class="picture-placeholder">TEAM BUILDING</div>
+                    </div>
+                    <div class="picture-item small">
+                        <div class="picture-placeholder">LAB WORK</div>
+                    </div>
+                    <div class="picture-item large">
+                        <div class="picture-placeholder">SHAD INK MEETING</div>
+                    </div>
+                    <div class="picture-item small">
+                        <div class="picture-placeholder">DINNER TIME</div>
+                    </div>
+                    <div class="picture-item small">
+                        <div class="picture-placeholder">EVENING ACTIVITIES</div>
+                    </div>
+                    <div class="picture-item medium">
+                        <div class="picture-placeholder">FINAL PRESENTATIONS</div>
+                    </div>
+                    <div class="picture-item small">
+                        <div class="picture-placeholder">GRADUATION DAY</div>
+                    </div>
+                </div>
+            </section>
 
-    <script src="script.js"></script>
+            <a href="index.html" class="back-link">← BACK TO CURRENT EDITION</a>
+        </main>
+    </div>
 </body>
 </html>
