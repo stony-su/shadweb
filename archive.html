@@ -11,29 +11,7 @@
             max-width: 320px;
             margin: 0 auto;
             padding: 10px;
-        }
-        
-        .archive-header {
-            background: #1a1a1a;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        
-        .archive-header h1 {
-            font-family: 'Courier New', monospace;
-            font-size: 16px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-        
-        .archive-header .subtitle {
-            font-family: 'Courier New', monospace;
-            font-size: 10px;
-            color: #ccc;
-            letter-spacing: 1px;
+            margin-top: 80px; /* Space for fixed header */
         }
         
         .newspapers-section {
@@ -160,11 +138,27 @@
     </style>
 </head>
 <body>
+    <header id="main-header" class="header">
+        <div class="header-content">
+            <div class="newspaper-title">
+                <h1>SHAD DAILY</h1>
+                <div class="subtitle">SHAD WATERLOO</div>
+            </div>
+            <div class="header-info">
+                <div class="date">December 15, 2025</div>
+                <div class="price">25¢</div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <a href="index.html#front-page">FRONT PAGE</a>
+            <a href="index.html#sNews">SHAD NEWS</a>
+            <a href="index.html#dailyQC">DAILY Q+C</a>
+            <a href="index.html#classifieds">CLASSIFIEDS</a>
+            <a href="archive.html">ARCHIVE</a>
+        </nav>
+    </header>
+
     <div class="archive-container">
-        <header class="archive-header">
-            <h1>SHAD DAILY ARCHIVE</h1>
-            <div class="subtitle">SHAD WATERLOO</div>
-        </header>
 
         <main>
             <section class="newspapers-section">
@@ -236,5 +230,7 @@
             <a href="index.html" class="back-link">← BACK TO CURRENT EDITION</a>
         </main>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
