@@ -6,6 +6,8 @@
     <title>Shad Newspapers - Waterloo 2025</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman:ital,wght@0,400;0,700;1,400&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+    <!-- KaTeX CSS for LaTeX rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css">
 </head>
 <body>
     <header id="main-header" class="header">
@@ -21,9 +23,10 @@
         </div>
         <nav class="nav-menu">
             <a href="#front-page">FRONT PAGE</a>
-            <a href="#local">ARCHIVE</a>
-            <a href="#sports">MEDIA</a>
+            <a href="#sNews">SHAD NEWS</a>
+            <a href="#dailyQC">DAILY Q+C</a>
             <a href="#classifieds">CLASSIFIEDS</a>
+            <a href="archive.html">ARCHIVE</a>
         </nav>
     </header>
 
@@ -62,7 +65,7 @@
                 </div>
 
                 <div class="quick-news">
-                    <h3>Schedule for July 8th:</h3>
+                    <h3>Reminders for July 8th:</h3>
                     <ul>
                         <li>Bring your Laptop to Design</li>
                         <li>Field trip at 7:00 pm ! (is it t&t? :O) </li>
@@ -73,8 +76,8 @@
             </div>
         </section>
 
-        <section class="local-news" id="local">
-            <h2>LOCAL NEWS</h2>
+        <section class="shad-news" id="sNews">
+            <h2>SHAD NEWS</h2>
             <article class="news-item">
                 <h3>Community Center Renovation Complete</h3>
                 <p>The long-awaited renovation of the Waterloo Community Center has finally been completed, 
@@ -87,38 +90,25 @@
             </article>
         </section>
 
-        <section class="sports" id="sports">
-            <h2>MEDIA</h2>
-            <article class="sports-item">
-                <h3>Warriors Win Championship</h3>
-                <p>The Waterloo Warriors basketball team secured their third consecutive championship 
-                with a thrilling overtime victory against their arch-rivals.</p>
+        <section class="dailyQC" id="dailyQC">
+            <h2>Daily Question</h2>
+            <article class="mQuestion">
+                <h3>Math Question</h3>
+                <p>In the figure below $WXYZ$ is a rectangle with $WX=4$ and $WZ=8$. Point $M$ lies $\\overline{XY}$, point $A$ lies on $\\overline{YZ}$, and $\\angle WMA$ is a right angle. The areas of $\\triangle WXM$ and $\\triangle WAZ$ are equal. What is the area of $\\triangle WMA$?</p>
             </article>
-            <article class="sports-item">
-                <h3>Swimming Team Sets Records</h3>
-                <p>Local swimming prodigy Alex Chen broke three regional records at the provincial championships, 
-                earning a spot on the national team.</p>
-            </article>
+            
         </section>
 
         <section class="classifieds" id="classifieds">
             <h2>CLASSIFIEDS</h2>
             <div class="classified-grid">
                 <div class="classified-item">
-                    <h4>FOR SALE</h4>
-                    <p>1998 Honda Civic, excellent condition, $2,500. Call 555-0123</p>
+                    <h4>SALON TABLE</h4>
+                    <p>Group solving AIME at salon tonight</p>
                 </div>
                 <div class="classified-item">
-                    <h4>WANTED</h4>
-                    <p>Part-time tutor for high school math. $15/hour. Call 555-0456</p>
-                </div>
-                <div class="classified-item">
-                    <h4>LOST & FOUND</h4>
-                    <p>Found: Golden retriever near Victoria Park. Call 555-0789</p>
-                </div>
-                <div class="classified-item">
-                    <h4>APARTMENT</h4>
-                    <p>1BR apartment available downtown. $800/month. Call 555-0321</p>
+                    <h4>ADS</h4>
+                    <p>Have an ad you want to show? Come talk to the SGN team!</p>
                 </div>
             </div>
         </section>
@@ -132,5 +122,18 @@
     </footer>
 
     <script src="script.js"></script>
+    <!-- KaTeX JS for LaTeX rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/contrib/auto-render.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "$", right: "$", display: false}
+          ]
+        });
+      });
+    </script>
 </body>
 </html>

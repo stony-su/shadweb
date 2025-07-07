@@ -9,11 +9,12 @@ body {
     font-family: 'Times New Roman', serif;
     line-height: 1.4;
     color: #000;
-    background-color: #f5f5f5;
+    background-color: #EFDECD;
     font-size: 12px;
     max-width: 320px;
     margin: 0 auto;
-    background: #fff;
+    /* Remove or comment out the next line */
+    /* background: #fff; */
 }
 
 /* Header styles with disappearing animation */
@@ -33,7 +34,6 @@ body {
 .header.hidden {
     transform: translateX(-50%) translateY(-100%);
 }
-
 .header-content {
     padding: 8px 10px;
     border-bottom: 2px solid #333;
@@ -313,4 +313,4 @@ body::before {
     background-size: 20px 20px;
     pointer-events: none;
     z-index: -1;
-} 
+}
