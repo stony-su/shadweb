@@ -160,6 +160,32 @@ body {
     opacity: 0.6;
 }
 
+.nav-menu2 {
+    display: flex;
+    background: #333;
+    padding: 4px 0;
+}
+
+.nav-menu2 a {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 8px;
+    font-weight: bold;
+    padding: 4px 2px;
+    border-right: 1px solid #555;
+    transition: background-color 0.2s;
+}
+
+.nav-menu2 a:last-child {
+    border-right: none;
+}
+
+.nav-menu2 a:hover {
+    background: #555;
+}
+
 /* Main content */
 .content {
     margin-top: 80px; /* Space for fixed header */
