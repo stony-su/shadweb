@@ -41,7 +41,7 @@ body {
 
 .newspaper-title h1 {
     font-family: 'Courier New', monospace;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     text-align: center;
     letter-spacing: 2px;
@@ -50,7 +50,7 @@ body {
 
 .subtitle {
     font-family: 'Courier New', monospace;
-    font-size: 10px;
+    font-size: 8px;
     text-align: center;
     color: #ccc;
     letter-spacing: 1px;
