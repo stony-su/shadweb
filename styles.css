@@ -17,6 +17,61 @@ body {
     /* background: #fff; */
 }
 
+/* Shake animation keyframes */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-2px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(2px);
+    }
+}
+
+@keyframes shakeVertical {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateY(-1px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateY(1px);
+    }
+}
+
+@keyframes shakeRotate {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: rotate(-0.5deg);
+    }
+    20%, 40%, 60%, 80% {
+        transform: rotate(0.5deg);
+    }
+}
+
+/* Combined shake effect */
+@keyframes screenShake {
+    0%, 100% {
+        transform: translateX(0) translateY(0) rotate(0deg);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-3px) translateY(-1px) rotate(-0.3deg);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(3px) translateY(1px) rotate(0.3deg);
+    }
+}
+
+/* Apply shake animation to body */
+body.shake {
+    animation: screenShake 0.5s ease-in-out;
+}
+
 /* Header styles with disappearing animation */
 .header {
     background: #1a1a1a;
@@ -495,4 +550,287 @@ body::before {
     background-size: 20px 20px;
     pointer-events: none;
     z-index: -1;
+}
+
+/* Desktop Mode Toggle Button */
+.desktop-toggle-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+    display: none; /* Hidden by default, shown only on desktop */
+}
+
+.desktop-toggle-btn {
+    background: #fff;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    box-shadow: 2px 2px 0 #000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.desktop-toggle-btn:hover {
+    background: #000;
+    color: #fff;
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 #000;
+}
+
+.desktop-toggle-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 #000;
+}
+
+.toggle-icon {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.toggle-text {
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+/* Desktop Mode Styles */
+body.desktop-mode {
+    max-width: none;
+    margin: 0;
+    font-size: 14px;
+    background: #f5f5f5;
+}
+
+body.desktop-mode .header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    transform: none;
+    left: auto;
+}
+
+body.desktop-mode .header-content {
+    padding: 16px 20px;
+}
+
+body.desktop-mode .newspaper-title h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+body.desktop-mode .subtitle {
+    font-size: 14px;
+}
+
+body.desktop-mode .header-info {
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+body.desktop-mode .nav-menu,
+body.desktop-mode .nav-menu2 {
+    padding: 8px 0;
+}
+
+body.desktop-mode .nav-menu a,
+body.desktop-mode .nav-menu2 a {
+    font-size: 12px;
+    padding: 8px 4px;
+}
+
+body.desktop-mode .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+/* Desktop sections container for dynamic layout */
+body.desktop-mode .desktop-sections-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+body.desktop-mode .shad-news,
+body.desktop-mode .classifieds {
+    flex: 1;
+    min-height: 0;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+body.desktop-mode .front-page {
+    display: block;
+}
+
+body.desktop-mode .main-story h2 {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+body.desktop-mode .workshop-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    font-size: 14px;
+}
+
+body.desktop-mode .workshop-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+body.desktop-mode .workshop-speaker {
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+body.desktop-mode .workshop-content {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+body.desktop-mode .sidebar {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+body.desktop-mode .weather-widget,
+body.desktop-mode .quick-news {
+    margin-bottom: 20px;
+    padding: 16px;
+    font-size: 14px;
+}
+
+body.desktop-mode .weather-widget h3,
+body.desktop-mode .quick-news h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+body.desktop-mode section h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+body.desktop-mode .news-item h3,
+body.desktop-mode .sports-item h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+body.desktop-mode .news-item p,
+body.desktop-mode .sports-item p {
+    font-size: 14px;
+}
+
+body.desktop-mode .classified-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+body.desktop-mode .classified-item {
+    padding: 16px;
+    font-size: 14px;
+}
+
+body.desktop-mode .classified-item h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+body.desktop-mode .dailyQC {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+body.desktop-mode .team-section {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+body.desktop-mode .team-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+body.desktop-mode .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+body.desktop-mode .team-category {
+    padding: 12px;
+    font-size: 14px;
+}
+
+body.desktop-mode .category-title {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+body.desktop-mode .team-members {
+    font-size: 14px;
+}
+
+body.desktop-mode .contact-info {
+    padding-top: 16px;
+}
+
+body.desktop-mode .contact-item {
+    margin-bottom: 8px;
+    padding: 4px 0;
+    font-size: 14px;
+}
+
+body.desktop-mode .contact-label {
+    font-size: 14px;
+}
+
+body.desktop-mode .contact-value,
+body.desktop-mode .contact-link {
+    font-size: 14px;
+}
+
+body.desktop-mode .footer {
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding: 20px;
+    font-size: 12px;
+}
+
+/* Show desktop toggle only on screens wider than 768px */
+@media (min-width: 768px) {
+    .desktop-toggle-container {
+        display: block;
+    }
+}
+
+/* Hide desktop toggle on mobile */
+@media (max-width: 767px) {
+    .desktop-toggle-container {
+        display: none;
+    }
 }
