@@ -193,9 +193,46 @@ document.addEventListener('DOMContentLoaded', function() {
                     95: "Thunderstorm"
                 };
 
-                weatherInfo.querySelector('.temp').textContent = `${temp}°C`;
-                weatherInfo.querySelector('.condition').textContent = conditions[code] || "Unknown";
-                weatherInfo.querySelector('.forecast').textContent = `High: ${max}°C | Low: ${min}°C`;
+                // 7-day forecast
+                const forecast7 = document.getElementById('forecast-7day');
+                if (forecast7 && data.daily && data.daily.time) {
+                    // Find tomorrow's index in the daily.time array
+                    const today = new Date();
+                    today.setDate(today.getDate());
+                    today.setHours(0, 0, 0, 0);
+                    let startIdx = 0;
+                    for (let i = 0; i < data.daily.time.length; i++) {
+                        const day = new Date(data.daily.time[i]);
+                        day.setHours(0, 0, 0, 0);
+                        if (day.getTime() === today.getTime()) {
+                            startIdx = i;
+                            break;
+                        }
+                    }
+
+                    let html = '<div class="forecast7-title" style="font-size:10px;margin-top:6px;">7-Day Forecast</div>';
+                    html += '<div class="forecast7-list" style="display:flex;flex-direction:column;background:#e4e4e4;padding:4px 0;border-radius:4px;">';
+                    for (let i = 0; i < 7; i++) {
+                        const idx = (startIdx + i) % data.daily.time.length;
+                        const day = new Date(data.daily.time[idx]);
+                        day.setHours(0, 0, 0, 0);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        const dayName = day.toLocaleDateString('en-US', { weekday: 'short' });
+                        const tmax = Math.round(data.daily.temperature_2m_max[idx]);
+                        const tmin = Math.round(data.daily.temperature_2m_min[idx]);
+                        const wcode = data.daily.weathercode[idx];
+                        // Highlight today's row
+                        const highlight = day.getTime() === today.getTime() ? "background:#c4c4c4;font-weight:bold;" : "";
+                        html += `<div style="display:flex;justify-content:space-between;align-items:center;font-size:9px;padding:2px 8px;${i !== 0 ? 'border-top:1px solid #000;' : ''}${highlight}">
+        <span>${dayName}</span>
+        <span>${conditions[wcode] || ''}</span>
+        <span>${tmax}°/${tmin}°</span>
+    </div>`;
+                    }
+                    html += '</div>';
+                    forecast7.innerHTML = html;
+                }
             })
             .catch(() => {
                 const weatherInfo = document.getElementById('weather-info');
@@ -203,6 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     weatherInfo.querySelector('.temp').textContent = "N/A";
                     weatherInfo.querySelector('.condition').textContent = "Unavailable";
                     weatherInfo.querySelector('.forecast').textContent = "";
+                    const forecast7 = document.getElementById('forecast-7day');
+                    if (forecast7) forecast7.textContent = "";
                 }
             });
     }
