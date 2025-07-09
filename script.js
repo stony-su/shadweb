@@ -21,10 +21,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const header = document.getElementById('main-header');
     let lastScrollTop = 0;
     let scrollThreshold = 50; // Minimum scroll distance before hiding header
+    let shakeTriggered = false; // Prevent multiple shakes
     
     // Function to handle scroll events
     function handleScroll() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Check if user has scrolled to the bottom
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrolledToBottom = windowHeight + scrollTop >= documentHeight - 10; // 10px threshold
+        
+        // Trigger shake animation when reaching bottom
+        if (scrolledToBottom && !shakeTriggered) {
+            triggerShakeAnimation();
+            shakeTriggered = true;
+        } else if (!scrolledToBottom) {
+            shakeTriggered = false; // Reset when not at bottom
+        }
         
         // Only hide/show header if we've scrolled more than the threshold
         if (Math.abs(scrollTop - lastScrollTop) > scrollThreshold) {
@@ -37,6 +51,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             lastScrollTop = scrollTop;
         }
+    }
+    
+    // Function to trigger shake animation
+    function triggerShakeAnimation() {
+        const body = document.body;
+        
+        // Add shake class to trigger animation
+        body.classList.add('shake');
+        
+        // Remove the class after animation completes to allow re-triggering
+        setTimeout(() => {
+            body.classList.remove('shake');
+        }, 500); // Match the animation duration (0.5s)
+        
+        // Optional: Add a subtle sound effect or haptic feedback
+        console.log('Screen shake triggered!');
     }
     
     // Add scroll event listener with throttling for better performance
@@ -248,3 +278,86 @@ document.addEventListener('DOMContentLoaded', function() {
 
     updateWeather();
 });
+
+// Desktop Mode Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const desktopToggle = document.getElementById('desktop-toggle');
+    const body = document.body;
+    
+    // Check if desktop mode preference is stored
+    const isDesktopMode = localStorage.getItem('shadweb-desktop-mode') === 'true';
+    
+    // Apply desktop mode if previously enabled
+    if (isDesktopMode) {
+        body.classList.add('desktop-mode');
+        updateToggleButton(true);
+    }
+    
+    // Desktop mode toggle functionality
+    if (desktopToggle) {
+        desktopToggle.addEventListener('click', function() {
+            const isCurrentlyDesktop = body.classList.contains('desktop-mode');
+            
+            if (isCurrentlyDesktop) {
+                // Switch to mobile mode
+                body.classList.remove('desktop-mode');
+                localStorage.setItem('shadweb-desktop-mode', 'false');
+                updateToggleButton(false);
+            } else {
+                // Switch to desktop mode
+                body.classList.add('desktop-mode');
+                localStorage.setItem('shadweb-desktop-mode', 'true');
+                updateToggleButton(true);
+            }
+            
+            // Add a subtle transition effect
+            body.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                body.style.transition = '';
+            }, 300);
+        });
+    }
+    
+    function updateToggleButton(isDesktopMode) {
+        const toggleIcon = desktopToggle.querySelector('.toggle-icon');
+        const toggleText = desktopToggle.querySelector('.toggle-text');
+        
+        if (isDesktopMode) {
+            toggleIcon.textContent = '💻';
+            toggleText.textContent = 'Mobile Mode';
+        } else {
+            toggleIcon.textContent = '📱';
+            toggleText.textContent = 'Desktop Mode';
+        }
+    }
+    
+    // Auto-detect screen size and suggest desktop mode for large screens
+    function checkScreenSize() {
+        const isLargeScreen = window.innerWidth >= 1200;
+        const hasUsedDesktopMode = localStorage.getItem('shadweb-desktop-mode') !== null;
+        
+        if (isLargeScreen && !hasUsedDesktopMode && desktopToggle) {
+            // Show a subtle hint for large screens
+            setTimeout(() => {
+                desktopToggle.style.animation = 'pulse 2s ease-in-out';
+                setTimeout(() => {
+                    desktopToggle.style.animation = '';
+                }, 2000);
+            }, 3000);
+        }
+    }
+    
+    // Check screen size on load and resize
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+});
+
+// Add pulse animation for the hint
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+`;
+document.head.appendChild(style);

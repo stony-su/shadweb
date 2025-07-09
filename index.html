@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css">
 </head>
 <body>
+    <!-- Desktop Mode Toggle Button -->
+    <div class="desktop-toggle-container">
+        <button id="desktop-toggle" class="desktop-toggle-btn">
+            <span class="toggle-icon">📱</span>
+            <span class="toggle-text">Desktop Mode</span>
+        </button>
+    </div>
+
     <header id="main-header" class="header">
         <div class="header-content">
             <div class="newspaper-title">
@@ -166,19 +174,35 @@
             </div>
         </section>
 
-        <section class="shad-news" id="sNews">
-            <h2>SHAD NEWS</h2>
-            <article class="news-item">
-                <h3>Coding Workshop July 9th!</h3>
-                <p>The long-awaited coding workshop is finally here!
-                    Make sure your laptop is charged and ready to go for the entire day!
-                </p>
-            </article>
-            <article class="news-item">
-                <h3>Person bitten 50+ times by mosquitoes during camping trip!</h3>
-                <p>This story is developing! Stay tuned!</p>
-            </article>
-        </section>
+        <div class="desktop-sections-container">
+            <section class="shad-news" id="sNews">
+                <h2>SHAD NEWS</h2>
+                <article class="news-item">
+                    <h3>Coding Workshop July 9th!</h3>
+                    <p>The long-awaited coding workshop is finally here!
+                        Make sure your laptop is charged and ready to go for the entire day!
+                    </p>
+                </article>
+                <article class="news-item">
+                    <h3>Person bitten 50+ times by mosquitoes during camping trip!</h3>
+                    <p>This story is developing! Stay tuned!</p>
+                </article>
+            </section>
+
+            <section class="classifieds" id="classifieds">
+                <h2>CLASSIFIED</h2>
+                <div class="classified-grid">
+                    <div class="classified-item">
+                        <h4>SALON TABLE</h4>
+                        <p>Group solving COMC at salon tonight</p>
+                    </div>
+                    <div class="classified-item">
+                        <h4>AD</h4>
+                        <p>Have an ad you want to show? Come talk to the SGN team!</p>
+                    </div>
+                </div>
+            </section>
+        </div>
 
         <section class="dailyQC" id="dailyQC">
             <h2>Daily Question</h2>
@@ -230,20 +254,6 @@
                     <p><b>A:</b> Pi are round. Cake are square!</p>
                 </div>
             </article>
-        </section>
-
-        <section class="classifieds" id="classifieds">
-            <h2>CLASSIFIED</h2>
-            <div class="classified-grid">
-                <div class="classified-item">
-                    <h4>SALON TABLE</h4>
-                    <p>Group solving COMC at salon tonight</p>
-                </div>
-                <div class="classified-item">
-                    <h4>AD</h4>
-                    <p>Have an ad you want to show? Come talk to the SGN team!</p>
-                </div>
-            </div>
         </section>
 
         <section class="contact" id="contact">
