@@ -188,7 +188,7 @@ body {
 
 /* Main content */
 .content {
-    margin-top: 80px; /* Space for fixed header */
+    margin-top: 100px; /* Space for fixed header */
     padding: 10px;
     min-height: calc(100vh - 80px);
 }
