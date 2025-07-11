@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>July 3 - Camera A - Shad Daily Photo Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman:ital,wght@0,400;0,700;1,400&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .gallery-container {
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 10px;
+            margin-top: 80px;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-header h1 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-header p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        
+        .photo-item.loading img {
+            opacity: 0;
+        }
+        
+        .photo-item.loaded img {
+            opacity: 1;
+        }
+        
+        .loading-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .back-link:hover {
+            background: #333;
+        }
+        
+        .memory-info {
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header" class="header">
+        <div class="header-content">
+            <div class="newspaper-title">
+                <h1>SHAD DAILY</h1>
+                <div class="subtitle">SHAD WATERLOO</div>
+            </div>
+            <div class="header-info">
+                <div class="date">December 15, 2025</div>
+                <div class="price">25¢</div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <a href="../index.html#front-page">FRONT PAGE</a>
+            <a href="../index.html#sNews">SHAD NEWS</a>
+            <a href="../index.html#dailyQC">DAILY Q+C</a>
+            <a href="../index.html#classifieds">CLASSIFIEDS</a>
+            <a href="../archive.html">ARCHIVE</a>
+        </nav>
+    </header>
+
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1>JULY 3 - CAMERA A</h1>
+            <p>Photo Collection</p>
+        </div>
+
+        <div class="photo-grid" id="photo-grid">
+            <!-- Photos will be loaded dynamically -->
+        </div>
+
+        <div class="memory-info" id="memory-info">
+            Loading photos...
+        </div>
+
+        <a href="../archive.html" class="back-link">← BACK TO ARCHIVE</a>
+    </div>
+
+    <script>
+        // Photo data for July 3 - Camera A
+        const photos = [{'src': '../pictures/July 3 Camera A/DSCF0002.JPG', 'alt': 'DSCF0002.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0002.JPG', 'alt': 'DSCF0002.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0003.JPG', 'alt': 'DSCF0003.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0003.JPG', 'alt': 'DSCF0003.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0004.JPG', 'alt': 'DSCF0004.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0004.JPG', 'alt': 'DSCF0004.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0008.JPG', 'alt': 'DSCF0008.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0008.JPG', 'alt': 'DSCF0008.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0009.JPG', 'alt': 'DSCF0009.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0009.JPG', 'alt': 'DSCF0009.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0010.JPG', 'alt': 'DSCF0010.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0010.JPG', 'alt': 'DSCF0010.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0011.JPG', 'alt': 'DSCF0011.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0011.JPG', 'alt': 'DSCF0011.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0012.JPG', 'alt': 'DSCF0012.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0012.JPG', 'alt': 'DSCF0012.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0013.JPG', 'alt': 'DSCF0013.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0013.JPG', 'alt': 'DSCF0013.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0014.JPG', 'alt': 'DSCF0014.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0014.JPG', 'alt': 'DSCF0014.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0015.JPG', 'alt': 'DSCF0015.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0015.JPG', 'alt': 'DSCF0015.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0016.JPG', 'alt': 'DSCF0016.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0016.JPG', 'alt': 'DSCF0016.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0018.JPG', 'alt': 'DSCF0018.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0018.JPG', 'alt': 'DSCF0018.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0019.JPG', 'alt': 'DSCF0019.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0019.JPG', 'alt': 'DSCF0019.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0020.JPG', 'alt': 'DSCF0020.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0020.JPG', 'alt': 'DSCF0020.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0021.JPG', 'alt': 'DSCF0021.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0021.JPG', 'alt': 'DSCF0021.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0022.JPG', 'alt': 'DSCF0022.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0022.JPG', 'alt': 'DSCF0022.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0026.JPG', 'alt': 'DSCF0026.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0026.JPG', 'alt': 'DSCF0026.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0027.JPG', 'alt': 'DSCF0027.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0027.JPG', 'alt': 'DSCF0027.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0028.JPG', 'alt': 'DSCF0028.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0028.JPG', 'alt': 'DSCF0028.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0029.JPG', 'alt': 'DSCF0029.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0029.JPG', 'alt': 'DSCF0029.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0030.JPG', 'alt': 'DSCF0030.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0030.JPG', 'alt': 'DSCF0030.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0031.JPG', 'alt': 'DSCF0031.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0031.JPG', 'alt': 'DSCF0031.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0032.JPG', 'alt': 'DSCF0032.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0032.JPG', 'alt': 'DSCF0032.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0033.JPG', 'alt': 'DSCF0033.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0033.JPG', 'alt': 'DSCF0033.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0034.JPG', 'alt': 'DSCF0034.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0034.JPG', 'alt': 'DSCF0034.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0035.JPG', 'alt': 'DSCF0035.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0035.JPG', 'alt': 'DSCF0035.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0036.JPG', 'alt': 'DSCF0036.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0036.JPG', 'alt': 'DSCF0036.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0037.JPG', 'alt': 'DSCF0037.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0037.JPG', 'alt': 'DSCF0037.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0038.JPG', 'alt': 'DSCF0038.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0038.JPG', 'alt': 'DSCF0038.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0039.JPG', 'alt': 'DSCF0039.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0039.JPG', 'alt': 'DSCF0039.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0040.JPG', 'alt': 'DSCF0040.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0040.JPG', 'alt': 'DSCF0040.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0041.JPG', 'alt': 'DSCF0041.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0041.JPG', 'alt': 'DSCF0041.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0042.JPG', 'alt': 'DSCF0042.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0042.JPG', 'alt': 'DSCF0042.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0043.JPG', 'alt': 'DSCF0043.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0043.JPG', 'alt': 'DSCF0043.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0044.JPG', 'alt': 'DSCF0044.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0044.JPG', 'alt': 'DSCF0044.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0045.JPG', 'alt': 'DSCF0045.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0045.JPG', 'alt': 'DSCF0045.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0046.JPG', 'alt': 'DSCF0046.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0046.JPG', 'alt': 'DSCF0046.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0047.JPG', 'alt': 'DSCF0047.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0047.JPG', 'alt': 'DSCF0047.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0048.JPG', 'alt': 'DSCF0048.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0048.JPG', 'alt': 'DSCF0048.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0049.JPG', 'alt': 'DSCF0049.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0049.JPG', 'alt': 'DSCF0049.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0050.JPG', 'alt': 'DSCF0050.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0050.JPG', 'alt': 'DSCF0050.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0051.JPG', 'alt': 'DSCF0051.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0051.JPG', 'alt': 'DSCF0051.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0052.JPG', 'alt': 'DSCF0052.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0052.JPG', 'alt': 'DSCF0052.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0053.JPG', 'alt': 'DSCF0053.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0053.JPG', 'alt': 'DSCF0053.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0054.JPG', 'alt': 'DSCF0054.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0054.JPG', 'alt': 'DSCF0054.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0055.JPG', 'alt': 'DSCF0055.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0055.JPG', 'alt': 'DSCF0055.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0056.JPG', 'alt': 'DSCF0056.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0056.JPG', 'alt': 'DSCF0056.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0057.JPG', 'alt': 'DSCF0057.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0057.JPG', 'alt': 'DSCF0057.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0058.JPG', 'alt': 'DSCF0058.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0058.JPG', 'alt': 'DSCF0058.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0059.JPG', 'alt': 'DSCF0059.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0059.JPG', 'alt': 'DSCF0059.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0060.JPG', 'alt': 'DSCF0060.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0060.JPG', 'alt': 'DSCF0060.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0061.JPG', 'alt': 'DSCF0061.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0061.JPG', 'alt': 'DSCF0061.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0062.JPG', 'alt': 'DSCF0062.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0062.JPG', 'alt': 'DSCF0062.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0063.JPG', 'alt': 'DSCF0063.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0063.JPG', 'alt': 'DSCF0063.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0064.JPG', 'alt': 'DSCF0064.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0064.JPG', 'alt': 'DSCF0064.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0065.JPG', 'alt': 'DSCF0065.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0065.JPG', 'alt': 'DSCF0065.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0066.JPG', 'alt': 'DSCF0066.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0066.JPG', 'alt': 'DSCF0066.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0067.JPG', 'alt': 'DSCF0067.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0067.JPG', 'alt': 'DSCF0067.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0068.JPG', 'alt': 'DSCF0068.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0068.JPG', 'alt': 'DSCF0068.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0069.JPG', 'alt': 'DSCF0069.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0069.JPG', 'alt': 'DSCF0069.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0070.JPG', 'alt': 'DSCF0070.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0070.JPG', 'alt': 'DSCF0070.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0071.JPG', 'alt': 'DSCF0071.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0071.JPG', 'alt': 'DSCF0071.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0072.JPG', 'alt': 'DSCF0072.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0072.JPG', 'alt': 'DSCF0072.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0073.JPG', 'alt': 'DSCF0073.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0073.JPG', 'alt': 'DSCF0073.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0074.JPG', 'alt': 'DSCF0074.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0074.JPG', 'alt': 'DSCF0074.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0075.JPG', 'alt': 'DSCF0075.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0075.JPG', 'alt': 'DSCF0075.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0076.JPG', 'alt': 'DSCF0076.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0076.JPG', 'alt': 'DSCF0076.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0077.JPG', 'alt': 'DSCF0077.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0077.JPG', 'alt': 'DSCF0077.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0078.JPG', 'alt': 'DSCF0078.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0078.JPG', 'alt': 'DSCF0078.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0079.JPG', 'alt': 'DSCF0079.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0079.JPG', 'alt': 'DSCF0079.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0080.JPG', 'alt': 'DSCF0080.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0080.JPG', 'alt': 'DSCF0080.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0081.JPG', 'alt': 'DSCF0081.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0081.JPG', 'alt': 'DSCF0081.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0082.JPG', 'alt': 'DSCF0082.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0082.JPG', 'alt': 'DSCF0082.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0083.JPG', 'alt': 'DSCF0083.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0083.JPG', 'alt': 'DSCF0083.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0084.JPG', 'alt': 'DSCF0084.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0084.JPG', 'alt': 'DSCF0084.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0085.JPG', 'alt': 'DSCF0085.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0085.JPG', 'alt': 'DSCF0085.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0086.JPG', 'alt': 'DSCF0086.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0086.JPG', 'alt': 'DSCF0086.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0087.JPG', 'alt': 'DSCF0087.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0087.JPG', 'alt': 'DSCF0087.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0088.JPG', 'alt': 'DSCF0088.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0088.JPG', 'alt': 'DSCF0088.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0094.JPG', 'alt': 'DSCF0094.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0094.JPG', 'alt': 'DSCF0094.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0095.JPG', 'alt': 'DSCF0095.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0095.JPG', 'alt': 'DSCF0095.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0096.JPG', 'alt': 'DSCF0096.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0096.JPG', 'alt': 'DSCF0096.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0097.JPG', 'alt': 'DSCF0097.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0097.JPG', 'alt': 'DSCF0097.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0098.JPG', 'alt': 'DSCF0098.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0098.JPG', 'alt': 'DSCF0098.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0099.JPG', 'alt': 'DSCF0099.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0099.JPG', 'alt': 'DSCF0099.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0100.JPG', 'alt': 'DSCF0100.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0100.JPG', 'alt': 'DSCF0100.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0101.JPG', 'alt': 'DSCF0101.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0101.JPG', 'alt': 'DSCF0101.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0102.JPG', 'alt': 'DSCF0102.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0102.JPG', 'alt': 'DSCF0102.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0103.JPG', 'alt': 'DSCF0103.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0103.JPG', 'alt': 'DSCF0103.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0104.JPG', 'alt': 'DSCF0104.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0104.JPG', 'alt': 'DSCF0104.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0105.JPG', 'alt': 'DSCF0105.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0105.JPG', 'alt': 'DSCF0105.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0106.JPG', 'alt': 'DSCF0106.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0106.JPG', 'alt': 'DSCF0106.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0107.JPG', 'alt': 'DSCF0107.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0107.JPG', 'alt': 'DSCF0107.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0108.JPG', 'alt': 'DSCF0108.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0108.JPG', 'alt': 'DSCF0108.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0109.JPG', 'alt': 'DSCF0109.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0109.JPG', 'alt': 'DSCF0109.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0110.JPG', 'alt': 'DSCF0110.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0110.JPG', 'alt': 'DSCF0110.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0111.JPG', 'alt': 'DSCF0111.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0111.JPG', 'alt': 'DSCF0111.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0112.JPG', 'alt': 'DSCF0112.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0112.JPG', 'alt': 'DSCF0112.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0113.JPG', 'alt': 'DSCF0113.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0113.JPG', 'alt': 'DSCF0113.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0114.JPG', 'alt': 'DSCF0114.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0114.JPG', 'alt': 'DSCF0114.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0115.JPG', 'alt': 'DSCF0115.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0115.JPG', 'alt': 'DSCF0115.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0116.JPG', 'alt': 'DSCF0116.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0116.JPG', 'alt': 'DSCF0116.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0117.JPG', 'alt': 'DSCF0117.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0117.JPG', 'alt': 'DSCF0117.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0118.JPG', 'alt': 'DSCF0118.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0118.JPG', 'alt': 'DSCF0118.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0119.JPG', 'alt': 'DSCF0119.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0119.JPG', 'alt': 'DSCF0119.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0120.JPG', 'alt': 'DSCF0120.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0120.JPG', 'alt': 'DSCF0120.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0121.JPG', 'alt': 'DSCF0121.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0121.JPG', 'alt': 'DSCF0121.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0122.JPG', 'alt': 'DSCF0122.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0122.JPG', 'alt': 'DSCF0122.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0123.JPG', 'alt': 'DSCF0123.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0123.JPG', 'alt': 'DSCF0123.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0127.JPG', 'alt': 'DSCF0127.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0127.JPG', 'alt': 'DSCF0127.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0128.JPG', 'alt': 'DSCF0128.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0128.JPG', 'alt': 'DSCF0128.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0129.JPG', 'alt': 'DSCF0129.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0129.JPG', 'alt': 'DSCF0129.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0130.JPG', 'alt': 'DSCF0130.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0130.JPG', 'alt': 'DSCF0130.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0131.JPG', 'alt': 'DSCF0131.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0131.JPG', 'alt': 'DSCF0131.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0132.JPG', 'alt': 'DSCF0132.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0132.JPG', 'alt': 'DSCF0132.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0133.JPG', 'alt': 'DSCF0133.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0133.JPG', 'alt': 'DSCF0133.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0134.JPG', 'alt': 'DSCF0134.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0134.JPG', 'alt': 'DSCF0134.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0135.JPG', 'alt': 'DSCF0135.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0135.JPG', 'alt': 'DSCF0135.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0137.JPG', 'alt': 'DSCF0137.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0137.JPG', 'alt': 'DSCF0137.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0138.JPG', 'alt': 'DSCF0138.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0138.JPG', 'alt': 'DSCF0138.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0139.JPG', 'alt': 'DSCF0139.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0139.JPG', 'alt': 'DSCF0139.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0141.JPG', 'alt': 'DSCF0141.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0141.JPG', 'alt': 'DSCF0141.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0142.JPG', 'alt': 'DSCF0142.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0142.JPG', 'alt': 'DSCF0142.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0143.JPG', 'alt': 'DSCF0143.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0143.JPG', 'alt': 'DSCF0143.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0144.JPG', 'alt': 'DSCF0144.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0144.JPG', 'alt': 'DSCF0144.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0145.JPG', 'alt': 'DSCF0145.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0145.JPG', 'alt': 'DSCF0145.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0146.JPG', 'alt': 'DSCF0146.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0146.JPG', 'alt': 'DSCF0146.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0148.JPG', 'alt': 'DSCF0148.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0148.JPG', 'alt': 'DSCF0148.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0149.JPG', 'alt': 'DSCF0149.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0149.JPG', 'alt': 'DSCF0149.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0150.JPG', 'alt': 'DSCF0150.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0150.JPG', 'alt': 'DSCF0150.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0151.JPG', 'alt': 'DSCF0151.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0151.JPG', 'alt': 'DSCF0151.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0152.JPG', 'alt': 'DSCF0152.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0152.JPG', 'alt': 'DSCF0152.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0153.JPG', 'alt': 'DSCF0153.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0153.JPG', 'alt': 'DSCF0153.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0154.JPG', 'alt': 'DSCF0154.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0154.JPG', 'alt': 'DSCF0154.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0156.JPG', 'alt': 'DSCF0156.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0156.JPG', 'alt': 'DSCF0156.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0157.JPG', 'alt': 'DSCF0157.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0157.JPG', 'alt': 'DSCF0157.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0158.JPG', 'alt': 'DSCF0158.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0158.JPG', 'alt': 'DSCF0158.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0159.JPG', 'alt': 'DSCF0159.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0159.JPG', 'alt': 'DSCF0159.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0160.JPG', 'alt': 'DSCF0160.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0160.JPG', 'alt': 'DSCF0160.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0162.JPG', 'alt': 'DSCF0162.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0162.JPG', 'alt': 'DSCF0162.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0163.JPG', 'alt': 'DSCF0163.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0163.JPG', 'alt': 'DSCF0163.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0165.JPG', 'alt': 'DSCF0165.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0165.JPG', 'alt': 'DSCF0165.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0166.JPG', 'alt': 'DSCF0166.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0166.JPG', 'alt': 'DSCF0166.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0167.JPG', 'alt': 'DSCF0167.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0167.JPG', 'alt': 'DSCF0167.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0168.JPG', 'alt': 'DSCF0168.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0168.JPG', 'alt': 'DSCF0168.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0170.JPG', 'alt': 'DSCF0170.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0170.JPG', 'alt': 'DSCF0170.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0172.JPG', 'alt': 'DSCF0172.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0172.JPG', 'alt': 'DSCF0172.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0173.JPG', 'alt': 'DSCF0173.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0173.JPG', 'alt': 'DSCF0173.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0174.JPG', 'alt': 'DSCF0174.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0174.JPG', 'alt': 'DSCF0174.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0175.JPG', 'alt': 'DSCF0175.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0175.JPG', 'alt': 'DSCF0175.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0176.JPG', 'alt': 'DSCF0176.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0176.JPG', 'alt': 'DSCF0176.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0177.JPG', 'alt': 'DSCF0177.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0177.JPG', 'alt': 'DSCF0177.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0178.JPG', 'alt': 'DSCF0178.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0178.JPG', 'alt': 'DSCF0178.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0179.JPG', 'alt': 'DSCF0179.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0179.JPG', 'alt': 'DSCF0179.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0180.JPG', 'alt': 'DSCF0180.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0180.JPG', 'alt': 'DSCF0180.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0182.JPG', 'alt': 'DSCF0182.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0182.JPG', 'alt': 'DSCF0182.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0183.JPG', 'alt': 'DSCF0183.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0183.JPG', 'alt': 'DSCF0183.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0184.JPG', 'alt': 'DSCF0184.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0184.JPG', 'alt': 'DSCF0184.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0185.JPG', 'alt': 'DSCF0185.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0185.JPG', 'alt': 'DSCF0185.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0186.JPG', 'alt': 'DSCF0186.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0186.JPG', 'alt': 'DSCF0186.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0187.JPG', 'alt': 'DSCF0187.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0187.JPG', 'alt': 'DSCF0187.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0188.JPG', 'alt': 'DSCF0188.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0188.JPG', 'alt': 'DSCF0188.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0189.JPG', 'alt': 'DSCF0189.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0189.JPG', 'alt': 'DSCF0189.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0190.JPG', 'alt': 'DSCF0190.JPG'}, {'src': '../pictures/July 3 Camera A/DSCF0190.JPG', 'alt': 'DSCF0190.JPG'}];
+        
+        let loadedImages = new Set();
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
+
+        function createPhotoElement(photo, index) {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item loading';
+            photoItem.dataset.index = index;
+            
+            const img = document.createElement('img');
+            img.src = photo.src;
+            img.alt = photo.alt;
+            img.loading = 'lazy';
+            
+            const placeholder = document.createElement('div');
+            placeholder.className = 'loading-placeholder';
+            placeholder.textContent = `Loading...`;
+            
+            photoItem.appendChild(img);
+            photoItem.appendChild(placeholder);
+            
+            return photoItem;
+        }
+
+        function loadNextBatch() {
+            const startIndex = currentBatch * batchSize;
+            const endIndex = Math.min(startIndex + batchSize, photos.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const photoItem = document.querySelector(`[data-index="${i}"]`);
+                if (photoItem) {
+                    const img = photoItem.querySelector('img');
+                    const placeholder = photoItem.querySelector('.loading-placeholder');
+                    
+                    img.onload = function() {
+                        photoItem.classList.remove('loading');
+                        photoItem.classList.add('loaded');
+                        placeholder.style.display = 'none';
+                        loadedImages.add(i);
+                        updateMemoryInfo();
+                    };
+                    
+                    img.onerror = function() {
+                        placeholder.textContent = 'Error loading';
+                        placeholder.style.color = '#ff0000';
+                    };
+                }
+            }
+            
+            currentBatch++;
+        }
+
+        function updateMemoryInfo() {
+            const memoryInfo = document.getElementById('memory-info');
+            memoryInfo.textContent = `Loaded ${loadedImages.size} of ${photos.length} photos`;
+        }
+
+        function unloadDistantImages() {
+            // Remove images that are far from viewport to save memory
+            const viewportHeight = window.innerHeight;
+            const photoItems = document.querySelectorAll('.photo-item');
+            
+            photoItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                const isVisible = rect.top < viewportHeight + 200 && rect.bottom > -200;
+                
+                if (!isVisible && loadedImages.has(index)) {
+                    const img = item.querySelector('img');
+                    img.src = ''; // Clear src to unload from memory
+                    item.classList.remove('loaded');
+                    item.classList.add('loading');
+                    loadedImages.delete(index);
+                    
+                    const placeholder = item.querySelector('.loading-placeholder');
+                    placeholder.style.display = 'block';
+                    placeholder.textContent = 'Unloaded';
+                }
+            });
+            
+            updateMemoryInfo();
+        }
+
+        // Initialize gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoGrid = document.getElementById('photo-grid');
+            
+            // Create photo elements
+            photos.forEach((photo, index) => {
+                const photoElement = createPhotoElement(photo, index);
+                photoGrid.appendChild(photoElement);
+            });
+            
+            // Load first batch
+            loadNextBatch();
+            
+            // Set up intersection observer for lazy loading
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt(entry.target.dataset.index);
+                        if (!loadedImages.has(index)) {
+                            const img = entry.target.querySelector('img');
+                            img.src = photos[index].src;
+                        }
+                    }
+                });
+            }, { rootMargin: '50px' });
+            
+            // Observe all photo items
+            document.querySelectorAll('.photo-item').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Set up scroll listener for memory management
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(unloadDistantImages, 1000);
+            });
+            
+            // Load more batches as needed
+            setInterval(() => {
+                if (currentBatch * batchSize < photos.length) {
+                    loadNextBatch();
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
