@@ -8,10 +8,19 @@ def get_photo_files(folder_path):
     photos = []
     
     for ext in image_extensions:
-        photos.extend(glob.glob(os.path.join(folder_path, ext)))
-        photos.extend(glob.glob(os.path.join(folder_path, ext.upper())))
+        # Use case-insensitive pattern matching to avoid duplicates
+        photos.extend(glob.glob(os.path.join(folder_path, ext), recursive=False))
+        photos.extend(glob.glob(os.path.join(folder_path, ext.upper()), recursive=False))
     
-    return sorted(photos)
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_photos = []
+    for photo in photos:
+        if photo not in seen:
+            seen.add(photo)
+            unique_photos.append(photo)
+    
+    return sorted(unique_photos)
 
 def create_gallery_html(folder_name, folder_path, photos):
     """Create HTML content for a photo gallery"""

@@ -43,6 +43,12 @@
             background: #f0f0f0;
             border: 1px solid #ddd;
             overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.02);
         }
         
         .photo-item img {
@@ -92,6 +98,114 @@
             color: #666;
             margin-top: 10px;
         }
+    
+        /* Photo Modal Styles */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-image {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .modal-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-prev {
+            left: 15px;
+        }
+
+        .modal-next {
+            right: 15px;
+        }
+
+        .modal-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .modal-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+            
+            .modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 24px;
+            }
     </style>
 </head>
 <body>
@@ -131,12 +245,82 @@
 
         <a href="../archive.html" class="back-link">← BACK TO ARCHIVE</a>
     </div>
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="photo-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <img id="modal-image" class="modal-image" src="" alt="">
+            <div class="modal-nav modal-prev" id="modal-prev">‹</div>
+            <div class="modal-nav modal-next" id="modal-next">›</div>
+            <div class="modal-info" id="modal-info"></div>
+        </div>
+    </div>
 
     <script>
         // Photo data for el photos
-        const photos = [{'src': '../pictures/el photos/Ah Look How the Time Has Passed Ahhh Branek.JPG', 'alt': 'Ah Look How the Time Has Passed Ahhh Branek.JPG'}, {'src': '../pictures/el photos/Ah Look How the Time Has Passed Ahhh Branek.JPG', 'alt': 'Ah Look How the Time Has Passed Ahhh Branek.JPG'}, {'src': '../pictures/el photos/Another Yana.JPG', 'alt': 'Another Yana.JPG'}, {'src': '../pictures/el photos/Another Yana.JPG', 'alt': 'Another Yana.JPG'}, {'src': '../pictures/el photos/Another Zoe Pic.JPG', 'alt': 'Another Zoe Pic.JPG'}, {'src': '../pictures/el photos/Another Zoe Pic.JPG', 'alt': 'Another Zoe Pic.JPG'}, {'src': '../pictures/el photos/Auréanne (PLS EDIT A MOUSTACHE IN SHE WANTS ONE).jpg', 'alt': 'Auréanne (PLS EDIT A MOUSTACHE IN SHE WANTS ONE)'}, {'src': '../pictures/el photos/Auréanne (PLS EDIT A MOUSTACHE IN SHE WANTS ONE).jpg', 'alt': 'Auréanne (PLS EDIT A MOUSTACHE IN SHE WANTS ONE)'}, {'src': '../pictures/el photos/Auréanne Being POG.JPG', 'alt': 'Auréanne Being POG.JPG'}, {'src': '../pictures/el photos/Auréanne Being POG.JPG', 'alt': 'Auréanne Being POG.JPG'}, {'src': '../pictures/el photos/Auréanne and Terry.jpg', 'alt': 'Auréanne and Terry'}, {'src': '../pictures/el photos/Auréanne and Terry.jpg', 'alt': 'Auréanne and Terry'}, {'src': '../pictures/el photos/Auréanne in the Forbidden Position.JPG', 'alt': 'Auréanne in the Forbidden Position.JPG'}, {'src': '../pictures/el photos/Auréanne in the Forbidden Position.JPG', 'alt': 'Auréanne in the Forbidden Position.JPG'}, {'src': '../pictures/el photos/Beautiful Dragonfly.JPG', 'alt': 'Beautiful Dragonfly.JPG'}, {'src': '../pictures/el photos/Beautiful Dragonfly.JPG', 'alt': 'Beautiful Dragonfly.JPG'}, {'src': '../pictures/el photos/Better Bus Shot (End of Bus).JPG', 'alt': 'Better Bus Shot (End of Bus).JPG'}, {'src': '../pictures/el photos/Better Bus Shot (End of Bus).JPG', 'alt': 'Better Bus Shot (End of Bus).JPG'}, {'src': '../pictures/el photos/Blurry Branek Melancholy.JPG', 'alt': 'Blurry Branek Melancholy.JPG'}, {'src': '../pictures/el photos/Blurry Branek Melancholy.JPG', 'alt': 'Blurry Branek Melancholy.JPG'}, {'src': '../pictures/el photos/Blurry Yana.JPG', 'alt': 'Blurry Yana.JPG'}, {'src': '../pictures/el photos/Blurry Yana.JPG', 'alt': 'Blurry Yana.JPG'}, {'src': '../pictures/el photos/Branek Posing.JPG', 'alt': 'Branek Posing.JPG'}, {'src': '../pictures/el photos/Branek Posing.JPG', 'alt': 'Branek Posing.JPG'}, {'src': '../pictures/el photos/Claire and Chloé Looking Cool.JPG', 'alt': 'Claire and Chloé Looking Cool.JPG'}, {'src': '../pictures/el photos/Claire and Chloé Looking Cool.JPG', 'alt': 'Claire and Chloé Looking Cool.JPG'}, {'src': '../pictures/el photos/Close Up on Sae and Gabe.JPG', 'alt': 'Close Up on Sae and Gabe.JPG'}, {'src': '../pictures/el photos/Close Up on Sae and Gabe.JPG', 'alt': 'Close Up on Sae and Gabe.JPG'}, {'src': '../pictures/el photos/Closer to the Hole #2.jpg', 'alt': 'Closer to the Hole #2'}, {'src': '../pictures/el photos/Closer to the Hole #2.jpg', 'alt': 'Closer to the Hole #2'}, {'src': '../pictures/el photos/Contemplation.jpg', 'alt': 'Contemplation'}, {'src': '../pictures/el photos/Contemplation.jpg', 'alt': 'Contemplation'}, {'src': '../pictures/el photos/Cool Underground Hole.JPG', 'alt': 'Cool Underground Hole.JPG'}, {'src': '../pictures/el photos/Cool Underground Hole.JPG', 'alt': 'Cool Underground Hole.JPG'}, {'src': '../pictures/el photos/Craggy Region.JPG', 'alt': 'Craggy Region.JPG'}, {'src': '../pictures/el photos/Craggy Region.JPG', 'alt': 'Craggy Region.JPG'}, {'src': '../pictures/el photos/Dark Bus Shot.JPG', 'alt': 'Dark Bus Shot.JPG'}, {'src': '../pictures/el photos/Dark Bus Shot.JPG', 'alt': 'Dark Bus Shot.JPG'}, {'src': '../pictures/el photos/Dhruv Natural Posing.JPG', 'alt': 'Dhruv Natural Posing.JPG'}, {'src': '../pictures/el photos/Dhruv Natural Posing.JPG', 'alt': 'Dhruv Natural Posing.JPG'}, {'src': '../pictures/el photos/Dramatic Lighting of Jon and Dhruv.JPG', 'alt': 'Dramatic Lighting of Jon and Dhruv.JPG'}, {'src': '../pictures/el photos/Dramatic Lighting of Jon and Dhruv.JPG', 'alt': 'Dramatic Lighting of Jon and Dhruv.JPG'}, {'src': '../pictures/el photos/Dramatic Shot of the Bay (Right Side).JPG', 'alt': 'Dramatic Shot of the Bay (Right Side).JPG'}, {'src': '../pictures/el photos/Dramatic Shot of the Bay (Right Side).JPG', 'alt': 'Dramatic Shot of the Bay (Right Side).JPG'}, {'src': '../pictures/el photos/Eyyy Peaceful Water on Rock.jpg', 'alt': 'Eyyy Peaceful Water on Rock'}, {'src': '../pictures/el photos/Eyyy Peaceful Water on Rock.jpg', 'alt': 'Eyyy Peaceful Water on Rock'}, {'src': '../pictures/el photos/Ferry.JPG', 'alt': 'Ferry.JPG'}, {'src': '../pictures/el photos/Ferry.JPG', 'alt': 'Ferry.JPG'}, {'src': '../pictures/el photos/Flourish and Sae Posing by Water (Joe Cameo).JPG', 'alt': 'Flourish and Sae Posing by Water (Joe Cameo).JPG'}, {'src': '../pictures/el photos/Flourish and Sae Posing by Water (Joe Cameo).JPG', 'alt': 'Flourish and Sae Posing by Water (Joe Cameo).JPG'}, {'src': '../pictures/el photos/Flowers (Purple, Close-Up).JPG', 'alt': 'Flowers (Purple, Close Up).JPG'}, {'src': '../pictures/el photos/Flowers (Purple, Close-Up).JPG', 'alt': 'Flowers (Purple, Close Up).JPG'}, {'src': '../pictures/el photos/Forbidden Pose.JPG', 'alt': 'Forbidden Pose.JPG'}, {'src': '../pictures/el photos/Forbidden Pose.JPG', 'alt': 'Forbidden Pose.JPG'}, {'src': '../pictures/el photos/Forbidden Position...JPG', 'alt': 'Forbidden Position...JPG'}, {'src': '../pictures/el photos/Forbidden Position...JPG', 'alt': 'Forbidden Position...JPG'}, {'src': '../pictures/el photos/Front Shot of the Bus.JPG', 'alt': 'Front Shot of the Bus.JPG'}, {'src': '../pictures/el photos/Front Shot of the Bus.JPG', 'alt': 'Front Shot of the Bus.JPG'}, {'src': '../pictures/el photos/Front of Bus Shot.JPG', 'alt': 'Front of Bus Shot.JPG'}, {'src': '../pictures/el photos/Front of Bus Shot.JPG', 'alt': 'Front of Bus Shot.JPG'}, {'src': '../pictures/el photos/Funny Bus Shot.JPG', 'alt': 'Funny Bus Shot.JPG'}, {'src': '../pictures/el photos/Funny Bus Shot.JPG', 'alt': 'Funny Bus Shot.JPG'}, {'src': '../pictures/el photos/Gabriel and Sae Posing.JPG', 'alt': 'Gabriel and Sae Posing.JPG'}, {'src': '../pictures/el photos/Gabriel and Sae Posing.JPG', 'alt': 'Gabriel and Sae Posing.JPG'}, {'src': '../pictures/el photos/General Nature Shot.JPG', 'alt': 'General Nature Shot.JPG'}, {'src': '../pictures/el photos/General Nature Shot.JPG', 'alt': 'General Nature Shot.JPG'}, {'src': '../pictures/el photos/Group Forbidden Position (Portrait Mode).JPG', 'alt': 'Group Forbidden Position (Portrait Mode).JPG'}, {'src': '../pictures/el photos/Group Forbidden Position (Portrait Mode).JPG', 'alt': 'Group Forbidden Position (Portrait Mode).JPG'}, {'src': '../pictures/el photos/Hand Dipping in the Bay.JPG', 'alt': 'Hand Dipping in the Bay.JPG'}, {'src': '../pictures/el photos/Hand Dipping in the Bay.JPG', 'alt': 'Hand Dipping in the Bay.JPG'}, {'src': '../pictures/el photos/Hole #3.jpg', 'alt': 'Hole #3'}, {'src': '../pictures/el photos/Hole #3.jpg', 'alt': 'Hole #3'}, {'src': '../pictures/el photos/Jenny Mewing.JPG', 'alt': 'Jenny Mewing.JPG'}, {'src': '../pictures/el photos/Jenny Mewing.JPG', 'alt': 'Jenny Mewing.JPG'}, {'src': '../pictures/el photos/Jiya Plugged In _ Madeline Locked In.JPG', 'alt': 'Jiya Plugged In   Madeline Locked In.JPG'}, {'src': '../pictures/el photos/Jiya Plugged In _ Madeline Locked In.JPG', 'alt': 'Jiya Plugged In   Madeline Locked In.JPG'}, {'src': '../pictures/el photos/Joe Squatting.JPG', 'alt': 'Joe Squatting.JPG'}, {'src': '../pictures/el photos/Joe Squatting.JPG', 'alt': 'Joe Squatting.JPG'}, {'src': '../pictures/el photos/Jon Laugh and Dhruv Admiring Water.JPG', 'alt': 'Jon Laugh and Dhruv Admiring Water.JPG'}, {'src': '../pictures/el photos/Jon Laugh and Dhruv Admiring Water.JPG', 'alt': 'Jon Laugh and Dhruv Admiring Water.JPG'}, {'src': '../pictures/el photos/Josh Superman Pose.JPG', 'alt': 'Josh Superman Pose.JPG'}, {'src': '../pictures/el photos/Josh Superman Pose.JPG', 'alt': 'Josh Superman Pose.JPG'}, {'src': '../pictures/el photos/Kayvan Chilling at the Bay.JPG', 'alt': 'Kayvan Chilling at the Bay.JPG'}, {'src': '../pictures/el photos/Kayvan Chilling at the Bay.JPG', 'alt': 'Kayvan Chilling at the Bay.JPG'}, {'src': '../pictures/el photos/Kayvan but Blurry 😔.JPG', 'alt': 'Kayvan but Blurry 😔.JPG'}, {'src': '../pictures/el photos/Kayvan but Blurry 😔.JPG', 'alt': 'Kayvan but Blurry 😔.JPG'}, {'src': '../pictures/el photos/Lakefront View at the Bay.JPG', 'alt': 'Lakefront View at the Bay.JPG'}, {'src': '../pictures/el photos/Lakefront View at the Bay.JPG', 'alt': 'Lakefront View at the Bay.JPG'}, {'src': '../pictures/el photos/Le penseur de Branek.JPG', 'alt': 'Le penseur de Branek.JPG'}, {'src': '../pictures/el photos/Le penseur de Branek.JPG', 'alt': 'Le penseur de Branek.JPG'}, {'src': '../pictures/el photos/Let_s Join the Gang.JPG', 'alt': 'Let s Join the Gang.JPG'}, {'src': '../pictures/el photos/Let_s Join the Gang.JPG', 'alt': 'Let s Join the Gang.JPG'}, {'src': '../pictures/el photos/Logan Chillax Mode.JPG', 'alt': 'Logan Chillax Mode.JPG'}, {'src': '../pictures/el photos/Logan Chillax Mode.JPG', 'alt': 'Logan Chillax Mode.JPG'}, {'src': '../pictures/el photos/MY MOST EPIC LIGHTING SHOT.JPG', 'alt': 'MY MOST EPIC LIGHTING SHOT.JPG'}, {'src': '../pictures/el photos/MY MOST EPIC LIGHTING SHOT.JPG', 'alt': 'MY MOST EPIC LIGHTING SHOT.JPG'}, {'src': '../pictures/el photos/Many Shads Finding Shads.JPG', 'alt': 'Many Shads Finding Shads.JPG'}, {'src': '../pictures/el photos/Many Shads Finding Shads.JPG', 'alt': 'Many Shads Finding Shads.JPG'}, {'src': '../pictures/el photos/Moody Lighting of Craggy Area.JPG', 'alt': 'Moody Lighting of Craggy Area.JPG'}, {'src': '../pictures/el photos/Moody Lighting of Craggy Area.JPG', 'alt': 'Moody Lighting of Craggy Area.JPG'}, {'src': '../pictures/el photos/More Shads but Even More Rocks.jpg', 'alt': 'More Shads but Even More Rocks'}, {'src': '../pictures/el photos/More Shads but Even More Rocks.jpg', 'alt': 'More Shads but Even More Rocks'}, {'src': '../pictures/el photos/Mosquitoes KO.JPG', 'alt': 'Mosquitoes KO.JPG'}, {'src': '../pictures/el photos/Mosquitoes KO.JPG', 'alt': 'Mosquitoes KO.JPG'}, {'src': '../pictures/el photos/Mya with Swagger Pose.JPG', 'alt': 'Mya with Swagger Pose.JPG'}, {'src': '../pictures/el photos/Mya with Swagger Pose.JPG', 'alt': 'Mya with Swagger Pose.JPG'}, {'src': '../pictures/el photos/Oooh look a shiny rock 😈💪😀Kayvan Ver_.jpg', 'alt': 'Oooh look a shiny rock 😈💪😀Kayvan Ver '}, {'src': '../pictures/el photos/Oooh look a shiny rock 😈💪😀Kayvan Ver_.jpg', 'alt': 'Oooh look a shiny rock 😈💪😀Kayvan Ver '}, {'src': '../pictures/el photos/PREEETY SUNSET.JPG', 'alt': 'PREEETY SUNSET.JPG'}, {'src': '../pictures/el photos/PREEETY SUNSET.JPG', 'alt': 'PREEETY SUNSET.JPG'}, {'src': '../pictures/el photos/PRETTY 2 BUT WITH MORE BLUEEEEEEE.JPG', 'alt': 'PRETTY 2 BUT WITH MORE BLUEEEEEEE.JPG'}, {'src': '../pictures/el photos/PRETTY 2 BUT WITH MORE BLUEEEEEEE.JPG', 'alt': 'PRETTY 2 BUT WITH MORE BLUEEEEEEE.JPG'}, {'src': '../pictures/el photos/PRETTY WITH A BOAT.JPG', 'alt': 'PRETTY WITH A BOAT.JPG'}, {'src': '../pictures/el photos/PRETTY WITH A BOAT.JPG', 'alt': 'PRETTY WITH A BOAT.JPG'}, {'src': '../pictures/el photos/SHHHHHHHHHH.JPG', 'alt': 'SHHHHHHHHHH.JPG'}, {'src': '../pictures/el photos/SHHHHHHHHHH.JPG', 'alt': 'SHHHHHHHHHH.JPG'}, {'src': '../pictures/el photos/Sae Lookin at Horizon (Pretty Picture).jpg', 'alt': 'Sae Lookin at Horizon (Pretty Picture)'}, {'src': '../pictures/el photos/Sae Lookin at Horizon (Pretty Picture).jpg', 'alt': 'Sae Lookin at Horizon (Pretty Picture)'}, {'src': '../pictures/el photos/Sae Looking at You.jpg', 'alt': 'Sae Looking at You'}, {'src': '../pictures/el photos/Sae Looking at You.jpg', 'alt': 'Sae Looking at You'}, {'src': '../pictures/el photos/Sae Smiling on Bus (NEED EDIT).JPG', 'alt': 'Sae Smiling on Bus (NEED EDIT).JPG'}, {'src': '../pictures/el photos/Sae Smiling on Bus (NEED EDIT).JPG', 'alt': 'Sae Smiling on Bus (NEED EDIT).JPG'}, {'src': '../pictures/el photos/Seagull Open Wings.JPG', 'alt': 'Seagull Open Wings.JPG'}, {'src': '../pictures/el photos/Seagull Open Wings.JPG', 'alt': 'Seagull Open Wings.JPG'}, {'src': '../pictures/el photos/Seagull Walk.JPG', 'alt': 'Seagull Walk.JPG'}, {'src': '../pictures/el photos/Seagull Walk.JPG', 'alt': 'Seagull Walk.JPG'}, {'src': '../pictures/el photos/Shhhh.JPG', 'alt': 'Shhhh.JPG'}, {'src': '../pictures/el photos/Shhhh.JPG', 'alt': 'Shhhh.JPG'}, {'src': '../pictures/el photos/Sick AF Photo of the Bay Water.JPG', 'alt': 'Sick AF Photo of the Bay Water.JPG'}, {'src': '../pictures/el photos/Sick AF Photo of the Bay Water.JPG', 'alt': 'Sick AF Photo of the Bay Water.JPG'}, {'src': '../pictures/el photos/Slightly Different Ver. of Hand Dipping_.JPG', 'alt': 'Slightly Different Ver. of Hand Dipping .JPG'}, {'src': '../pictures/el photos/Slightly Different Ver. of Hand Dipping_.JPG', 'alt': 'Slightly Different Ver. of Hand Dipping .JPG'}, {'src': '../pictures/el photos/Soccer.JPG', 'alt': 'Soccer.JPG'}, {'src': '../pictures/el photos/Soccer.JPG', 'alt': 'Soccer.JPG'}, {'src': '../pictures/el photos/Spiderman Veda.JPG', 'alt': 'Spiderman Veda.JPG'}, {'src': '../pictures/el photos/Spiderman Veda.JPG', 'alt': 'Spiderman Veda.JPG'}, {'src': '../pictures/el photos/Stargazers.png', 'alt': 'Stargazers'}, {'src': '../pictures/el photos/Stargazers.png', 'alt': 'Stargazers'}, {'src': '../pictures/el photos/Sunset Craggle.JPG', 'alt': 'Sunset Craggle.JPG'}, {'src': '../pictures/el photos/Sunset Craggle.JPG', 'alt': 'Sunset Craggle.JPG'}, {'src': '../pictures/el photos/Terry Confirmed.jpg', 'alt': 'Terry Confirmed'}, {'src': '../pictures/el photos/Terry Confirmed.jpg', 'alt': 'Terry Confirmed'}, {'src': '../pictures/el photos/The Grotto 😱😱😱.jpg', 'alt': 'The Grotto 😱😱😱'}, {'src': '../pictures/el photos/The Grotto 😱😱😱.jpg', 'alt': 'The Grotto 😱😱😱'}, {'src': '../pictures/el photos/The Hole #1.jpg', 'alt': 'The Hole #1'}, {'src': '../pictures/el photos/The Hole #1.jpg', 'alt': 'The Hole #1'}, {'src': '../pictures/el photos/The Trees and Rocks.PNG', 'alt': 'The Trees and Rocks.PNG'}, {'src': '../pictures/el photos/The Trees and Rocks.PNG', 'alt': 'The Trees and Rocks.PNG'}, {'src': '../pictures/el photos/Trees but With a Cool Looking Light in the Centre.JPG', 'alt': 'Trees but With a Cool Looking Light in the Centre.JPG'}, {'src': '../pictures/el photos/Trees but With a Cool Looking Light in the Centre.JPG', 'alt': 'Trees but With a Cool Looking Light in the Centre.JPG'}, {'src': '../pictures/el photos/Veda in the Forbidden Position.JPG', 'alt': 'Veda in the Forbidden Position.JPG'}, {'src': '../pictures/el photos/Veda in the Forbidden Position.JPG', 'alt': 'Veda in the Forbidden Position.JPG'}, {'src': '../pictures/el photos/Zoe Smile _).JPG', 'alt': 'Zoe Smile  ).JPG'}, {'src': '../pictures/el photos/Zoe Smile _).JPG', 'alt': 'Zoe Smile  ).JPG'}, {'src': '../pictures/el photos/_Eep these rocks are slipper- EEEEEEE_ Dhruv Ver..JPG', 'alt': ' Eep these rocks are slipper  EEEEEEE  Dhruv Ver..JPG'}, {'src': '../pictures/el photos/_Eep these rocks are slipper- EEEEEEE_ Dhruv Ver..JPG', 'alt': ' Eep these rocks are slipper  EEEEEEE  Dhruv Ver..JPG'}, {'src': '../pictures/el photos/_Never mind I_m fine 👍👍👍_ Dhruv.jpg', 'alt': ' Never mind I m fine 👍👍👍  Dhruv'}, {'src': '../pictures/el photos/_Never mind I_m fine 👍👍👍_ Dhruv.jpg', 'alt': ' Never mind I m fine 👍👍👍  Dhruv'}, {'src': '../pictures/el photos/_Nother Water Shot.jpg', 'alt': ' Nother Water Shot'}, {'src': '../pictures/el photos/_Nother Water Shot.jpg', 'alt': ' Nother Water Shot'}, {'src': '../pictures/el photos/_Oh my car warrenty is expired_ dw I_m stuck on a rock anyway _D_ Kayvan.jpg', 'alt': ' Oh my car warrenty is expired  dw I m stuck on a rock anyway  D  Kayvan'}, {'src': '../pictures/el photos/_Oh my car warrenty is expired_ dw I_m stuck on a rock anyway _D_ Kayvan.jpg', 'alt': ' Oh my car warrenty is expired  dw I m stuck on a rock anyway  D  Kayvan'}, {'src': '../pictures/el photos/_Slowly... slowly..._ Sae on Rock.jpg', 'alt': ' Slowly... slowly...  Sae on Rock'}, {'src': '../pictures/el photos/_Slowly... slowly..._ Sae on Rock.jpg', 'alt': ' Slowly... slowly...  Sae on Rock'}];
+        const photos = [{'src': '../pictures/el photos/Ah Look How the Time Has Passed Ahhh Branek.JPG', 'alt': 'Ah Look How the Time Has Passed Ahhh Branek.JPG'}, {'src': '../pictures/el photos/Another Yana.JPG', 'alt': 'Another Yana.JPG'}, {'src': '../pictures/el photos/Another Zoe Pic.JPG', 'alt': 'Another Zoe Pic.JPG'}, {'src': '../pictures/el photos/Auréanne (PLS EDIT A MOUSTACHE IN SHE WANTS ONE).jpg', 'alt': 'Auréanne (PLS EDIT A MOUSTACHE IN SHE WANTS ONE)'}, {'src': '../pictures/el photos/Auréanne Being POG.JPG', 'alt': 'Auréanne Being POG.JPG'}, {'src': '../pictures/el photos/Auréanne and Terry.jpg', 'alt': 'Auréanne and Terry'}, {'src': '../pictures/el photos/Auréanne in the Forbidden Position.JPG', 'alt': 'Auréanne in the Forbidden Position.JPG'}, {'src': '../pictures/el photos/Beautiful Dragonfly.JPG', 'alt': 'Beautiful Dragonfly.JPG'}, {'src': '../pictures/el photos/Better Bus Shot (End of Bus).JPG', 'alt': 'Better Bus Shot (End of Bus).JPG'}, {'src': '../pictures/el photos/Blurry Branek Melancholy.JPG', 'alt': 'Blurry Branek Melancholy.JPG'}, {'src': '../pictures/el photos/Blurry Yana.JPG', 'alt': 'Blurry Yana.JPG'}, {'src': '../pictures/el photos/Branek Posing.JPG', 'alt': 'Branek Posing.JPG'}, {'src': '../pictures/el photos/Claire and Chloé Looking Cool.JPG', 'alt': 'Claire and Chloé Looking Cool.JPG'}, {'src': '../pictures/el photos/Close Up on Sae and Gabe.JPG', 'alt': 'Close Up on Sae and Gabe.JPG'}, {'src': '../pictures/el photos/Closer to the Hole #2.jpg', 'alt': 'Closer to the Hole #2'}, {'src': '../pictures/el photos/Contemplation.jpg', 'alt': 'Contemplation'}, {'src': '../pictures/el photos/Cool Underground Hole.JPG', 'alt': 'Cool Underground Hole.JPG'}, {'src': '../pictures/el photos/Craggy Region.JPG', 'alt': 'Craggy Region.JPG'}, {'src': '../pictures/el photos/Dark Bus Shot.JPG', 'alt': 'Dark Bus Shot.JPG'}, {'src': '../pictures/el photos/Dhruv Natural Posing.JPG', 'alt': 'Dhruv Natural Posing.JPG'}, {'src': '../pictures/el photos/Dramatic Lighting of Jon and Dhruv.JPG', 'alt': 'Dramatic Lighting of Jon and Dhruv.JPG'}, {'src': '../pictures/el photos/Dramatic Shot of the Bay (Right Side).JPG', 'alt': 'Dramatic Shot of the Bay (Right Side).JPG'}, {'src': '../pictures/el photos/Eyyy Peaceful Water on Rock.jpg', 'alt': 'Eyyy Peaceful Water on Rock'}, {'src': '../pictures/el photos/Ferry.JPG', 'alt': 'Ferry.JPG'}, {'src': '../pictures/el photos/Flourish and Sae Posing by Water (Joe Cameo).JPG', 'alt': 'Flourish and Sae Posing by Water (Joe Cameo).JPG'}, {'src': '../pictures/el photos/Flowers (Purple, Close-Up).JPG', 'alt': 'Flowers (Purple, Close Up).JPG'}, {'src': '../pictures/el photos/Forbidden Pose.JPG', 'alt': 'Forbidden Pose.JPG'}, {'src': '../pictures/el photos/Forbidden Position...JPG', 'alt': 'Forbidden Position...JPG'}, {'src': '../pictures/el photos/Front Shot of the Bus.JPG', 'alt': 'Front Shot of the Bus.JPG'}, {'src': '../pictures/el photos/Front of Bus Shot.JPG', 'alt': 'Front of Bus Shot.JPG'}, {'src': '../pictures/el photos/Funny Bus Shot.JPG', 'alt': 'Funny Bus Shot.JPG'}, {'src': '../pictures/el photos/Gabriel and Sae Posing.JPG', 'alt': 'Gabriel and Sae Posing.JPG'}, {'src': '../pictures/el photos/General Nature Shot.JPG', 'alt': 'General Nature Shot.JPG'}, {'src': '../pictures/el photos/Group Forbidden Position (Portrait Mode).JPG', 'alt': 'Group Forbidden Position (Portrait Mode).JPG'}, {'src': '../pictures/el photos/Hand Dipping in the Bay.JPG', 'alt': 'Hand Dipping in the Bay.JPG'}, {'src': '../pictures/el photos/Hole #3.jpg', 'alt': 'Hole #3'}, {'src': '../pictures/el photos/Jenny Mewing.JPG', 'alt': 'Jenny Mewing.JPG'}, {'src': '../pictures/el photos/Jiya Plugged In _ Madeline Locked In.JPG', 'alt': 'Jiya Plugged In   Madeline Locked In.JPG'}, {'src': '../pictures/el photos/Joe Squatting.JPG', 'alt': 'Joe Squatting.JPG'}, {'src': '../pictures/el photos/Jon Laugh and Dhruv Admiring Water.JPG', 'alt': 'Jon Laugh and Dhruv Admiring Water.JPG'}, {'src': '../pictures/el photos/Josh Superman Pose.JPG', 'alt': 'Josh Superman Pose.JPG'}, {'src': '../pictures/el photos/Kayvan Chilling at the Bay.JPG', 'alt': 'Kayvan Chilling at the Bay.JPG'}, {'src': '../pictures/el photos/Kayvan but Blurry 😔.JPG', 'alt': 'Kayvan but Blurry 😔.JPG'}, {'src': '../pictures/el photos/Lakefront View at the Bay.JPG', 'alt': 'Lakefront View at the Bay.JPG'}, {'src': '../pictures/el photos/Le penseur de Branek.JPG', 'alt': 'Le penseur de Branek.JPG'}, {'src': '../pictures/el photos/Let_s Join the Gang.JPG', 'alt': 'Let s Join the Gang.JPG'}, {'src': '../pictures/el photos/Logan Chillax Mode.JPG', 'alt': 'Logan Chillax Mode.JPG'}, {'src': '../pictures/el photos/MY MOST EPIC LIGHTING SHOT.JPG', 'alt': 'MY MOST EPIC LIGHTING SHOT.JPG'}, {'src': '../pictures/el photos/Many Shads Finding Shads.JPG', 'alt': 'Many Shads Finding Shads.JPG'}, {'src': '../pictures/el photos/Moody Lighting of Craggy Area.JPG', 'alt': 'Moody Lighting of Craggy Area.JPG'}, {'src': '../pictures/el photos/More Shads but Even More Rocks.jpg', 'alt': 'More Shads but Even More Rocks'}, {'src': '../pictures/el photos/Mosquitoes KO.JPG', 'alt': 'Mosquitoes KO.JPG'}, {'src': '../pictures/el photos/Mya with Swagger Pose.JPG', 'alt': 'Mya with Swagger Pose.JPG'}, {'src': '../pictures/el photos/Oooh look a shiny rock 😈💪😀Kayvan Ver_.jpg', 'alt': 'Oooh look a shiny rock 😈💪😀Kayvan Ver '}, {'src': '../pictures/el photos/PREEETY SUNSET.JPG', 'alt': 'PREEETY SUNSET.JPG'}, {'src': '../pictures/el photos/PRETTY 2 BUT WITH MORE BLUEEEEEEE.JPG', 'alt': 'PRETTY 2 BUT WITH MORE BLUEEEEEEE.JPG'}, {'src': '../pictures/el photos/PRETTY WITH A BOAT.JPG', 'alt': 'PRETTY WITH A BOAT.JPG'}, {'src': '../pictures/el photos/SHHHHHHHHHH.JPG', 'alt': 'SHHHHHHHHHH.JPG'}, {'src': '../pictures/el photos/Sae Lookin at Horizon (Pretty Picture).jpg', 'alt': 'Sae Lookin at Horizon (Pretty Picture)'}, {'src': '../pictures/el photos/Sae Looking at You.jpg', 'alt': 'Sae Looking at You'}, {'src': '../pictures/el photos/Sae Smiling on Bus (NEED EDIT).JPG', 'alt': 'Sae Smiling on Bus (NEED EDIT).JPG'}, {'src': '../pictures/el photos/Seagull Open Wings.JPG', 'alt': 'Seagull Open Wings.JPG'}, {'src': '../pictures/el photos/Seagull Walk.JPG', 'alt': 'Seagull Walk.JPG'}, {'src': '../pictures/el photos/Shhhh.JPG', 'alt': 'Shhhh.JPG'}, {'src': '../pictures/el photos/Sick AF Photo of the Bay Water.JPG', 'alt': 'Sick AF Photo of the Bay Water.JPG'}, {'src': '../pictures/el photos/Slightly Different Ver. of Hand Dipping_.JPG', 'alt': 'Slightly Different Ver. of Hand Dipping .JPG'}, {'src': '../pictures/el photos/Soccer.JPG', 'alt': 'Soccer.JPG'}, {'src': '../pictures/el photos/Spiderman Veda.JPG', 'alt': 'Spiderman Veda.JPG'}, {'src': '../pictures/el photos/Stargazers.png', 'alt': 'Stargazers'}, {'src': '../pictures/el photos/Sunset Craggle.JPG', 'alt': 'Sunset Craggle.JPG'}, {'src': '../pictures/el photos/Terry Confirmed.jpg', 'alt': 'Terry Confirmed'}, {'src': '../pictures/el photos/The Grotto 😱😱😱.jpg', 'alt': 'The Grotto 😱😱😱'}, {'src': '../pictures/el photos/The Hole #1.jpg', 'alt': 'The Hole #1'}, {'src': '../pictures/el photos/The Trees and Rocks.PNG', 'alt': 'The Trees and Rocks.PNG'}, {'src': '../pictures/el photos/Trees but With a Cool Looking Light in the Centre.JPG', 'alt': 'Trees but With a Cool Looking Light in the Centre.JPG'}, {'src': '../pictures/el photos/Veda in the Forbidden Position.JPG', 'alt': 'Veda in the Forbidden Position.JPG'}, {'src': '../pictures/el photos/Zoe Smile _).JPG', 'alt': 'Zoe Smile  ).JPG'}, {'src': '../pictures/el photos/_Eep these rocks are slipper- EEEEEEE_ Dhruv Ver..JPG', 'alt': ' Eep these rocks are slipper  EEEEEEE  Dhruv Ver..JPG'}, {'src': '../pictures/el photos/_Never mind I_m fine 👍👍👍_ Dhruv.jpg', 'alt': ' Never mind I m fine 👍👍👍  Dhruv'}, {'src': '../pictures/el photos/_Nother Water Shot.jpg', 'alt': ' Nother Water Shot'}, {'src': '../pictures/el photos/_Oh my car warrenty is expired_ dw I_m stuck on a rock anyway _D_ Kayvan.jpg', 'alt': ' Oh my car warrenty is expired  dw I m stuck on a rock anyway  D  Kayvan'}, {'src': '../pictures/el photos/_Slowly... slowly..._ Sae on Rock.jpg', 'alt': ' Slowly... slowly...  Sae on Rock'}];
         
         let loadedImages = new Set();
+        let currentModalIndex = 0;
+
+        // Modal functionality
+        const modal = document.getElementById('photo-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalClose = document.getElementById('modal-close');
+        const modalPrev = document.getElementById('modal-prev');
+        const modalNext = document.getElementById('modal-next');
+        const modalInfo = document.getElementById('modal-info');
+
+        function openModal(index) {
+            currentModalIndex = index;
+            modalImage.src = photos[index].src;
+            modalImage.alt = photos[index].alt;
+            modalInfo.textContent = `${index + 1} of ${photos.length}`;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showPrevImage() {
+            currentModalIndex = (currentModalIndex - 1 + photos.length) % photos.length;
+            openModal(currentModalIndex);
+        }
+
+        function showNextImage() {
+            currentModalIndex = (currentModalIndex + 1) % photos.length;
+            openModal(currentModalIndex);
+        }
+
+        // Event listeners for modal
+        modalClose.addEventListener('click', closeModal);
+        modalPrev.addEventListener('click', showPrevImage);
+        modalNext.addEventListener('click', showNextImage);
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display === 'block') {
+                switch(e.key) {
+                    case 'Escape':
+                        closeModal();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                }
+            });
         let currentBatch = 0;
         const batchSize = 6; // Load 6 images at a time
 
@@ -156,6 +340,12 @@
             
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
+            
+            
+            // Add click event for modal
+            photoItem.addEventListener('click', function() {
+                openModal(index);
+            });
             
             return photoItem;
         }
