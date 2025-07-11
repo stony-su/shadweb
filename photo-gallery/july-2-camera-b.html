@@ -43,6 +43,13 @@
             background: #f0f0f0;
             border: 1px solid #ddd;
             overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.02);
+        }
         }
         
         .photo-item img {
@@ -92,6 +99,115 @@
             color: #666;
             margin-top: 10px;
         }
+    
+        /* Photo Modal Styles */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-image {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .modal-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-prev {
+            left: 15px;
+        }
+
+        .modal-next {
+            right: 15px;
+        }
+
+        .modal-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .modal-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+            
+            .modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -131,12 +247,84 @@
 
         <a href="../archive.html" class="back-link">← BACK TO ARCHIVE</a>
     </div>
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="photo-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <img id="modal-image" class="modal-image" src="" alt="">
+            <div class="modal-nav modal-prev" id="modal-prev">‹</div>
+            <div class="modal-nav modal-next" id="modal-next">›</div>
+            <div class="modal-info" id="modal-info"></div>
+        </div>
+    </div>
 
     <script>
         // Photo data for July 2 - Camera B
-        const photos = [{'src': '../pictures/July 2 Camera B/DSCF0001.JPG', 'alt': 'DSCF0001.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0001.JPG', 'alt': 'DSCF0001.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0002.JPG', 'alt': 'DSCF0002.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0002.JPG', 'alt': 'DSCF0002.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0003.JPG', 'alt': 'DSCF0003.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0003.JPG', 'alt': 'DSCF0003.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0004.JPG', 'alt': 'DSCF0004.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0004.JPG', 'alt': 'DSCF0004.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0008.JPG', 'alt': 'DSCF0008.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0008.JPG', 'alt': 'DSCF0008.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0009.JPG', 'alt': 'DSCF0009.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0009.JPG', 'alt': 'DSCF0009.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0010.JPG', 'alt': 'DSCF0010.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0010.JPG', 'alt': 'DSCF0010.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0011.JPG', 'alt': 'DSCF0011.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0011.JPG', 'alt': 'DSCF0011.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0012.JPG', 'alt': 'DSCF0012.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0012.JPG', 'alt': 'DSCF0012.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0013.JPG', 'alt': 'DSCF0013.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0013.JPG', 'alt': 'DSCF0013.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0014.JPG', 'alt': 'DSCF0014.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0014.JPG', 'alt': 'DSCF0014.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0015.JPG', 'alt': 'DSCF0015.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0015.JPG', 'alt': 'DSCF0015.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0016.JPG', 'alt': 'DSCF0016.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0016.JPG', 'alt': 'DSCF0016.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0017.JPG', 'alt': 'DSCF0017.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0017.JPG', 'alt': 'DSCF0017.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0018.JPG', 'alt': 'DSCF0018.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0018.JPG', 'alt': 'DSCF0018.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0019.JPG', 'alt': 'DSCF0019.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0019.JPG', 'alt': 'DSCF0019.JPG'}];
+        const photos = [{'src': '../pictures/July 2 Camera B/DSCF0001.JPG', 'alt': 'DSCF0001.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0002.JPG', 'alt': 'DSCF0002.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0003.JPG', 'alt': 'DSCF0003.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0004.JPG', 'alt': 'DSCF0004.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0008.JPG', 'alt': 'DSCF0008.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0009.JPG', 'alt': 'DSCF0009.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0010.JPG', 'alt': 'DSCF0010.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0011.JPG', 'alt': 'DSCF0011.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0012.JPG', 'alt': 'DSCF0012.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0013.JPG', 'alt': 'DSCF0013.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0014.JPG', 'alt': 'DSCF0014.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0015.JPG', 'alt': 'DSCF0015.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0016.JPG', 'alt': 'DSCF0016.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0017.JPG', 'alt': 'DSCF0017.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0018.JPG', 'alt': 'DSCF0018.JPG'}, {'src': '../pictures/July 2 Camera B/DSCF0019.JPG', 'alt': 'DSCF0019.JPG'}];
         
         let loadedImages = new Set();
+        let currentModalIndex = 0;
+
+        // Modal functionality
+        const modal = document.getElementById('photo-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalClose = document.getElementById('modal-close');
+        const modalPrev = document.getElementById('modal-prev');
+        const modalNext = document.getElementById('modal-next');
+        const modalInfo = document.getElementById('modal-info');
+
+        function openModal(index) {
+            currentModalIndex = index;
+            modalImage.src = photos[index].src;
+            modalImage.alt = photos[index].alt;
+            modalInfo.textContent = `${index + 1} of ${photos.length}`;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showPrevImage() {
+            currentModalIndex = (currentModalIndex - 1 + photos.length) % photos.length;
+            openModal(currentModalIndex);
+        }
+
+        function showNextImage() {
+            currentModalIndex = (currentModalIndex + 1) % photos.length;
+            openModal(currentModalIndex);
+        }
+
+        // Event listeners for modal
+        modalClose.addEventListener('click', closeModal);
+        modalPrev.addEventListener('click', showPrevImage);
+        modalNext.addEventListener('click', showNextImage);
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display === 'block') {
+                switch(e.key) {
+                    case 'Escape':
+                        closeModal();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                }
+            }
+        });
         let currentBatch = 0;
         const batchSize = 6; // Load 6 images at a time
 
@@ -157,7 +345,11 @@
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
             
-            return photoItem;
+            
+            // Add click event for modal
+            photoItem.addEventListener('click', function() {
+                openModal(index);
+            });return photoItem;
         }
 
         function loadNextBatch() {

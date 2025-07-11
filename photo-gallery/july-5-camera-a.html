@@ -43,6 +43,12 @@
             background: #f0f0f0;
             border: 1px solid #ddd;
             overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .photo-item:hover {
+            transform: scale(1.02);
         }
         
         .photo-item img {
@@ -92,6 +98,114 @@
             color: #666;
             margin-top: 10px;
         }
+    
+        /* Photo Modal Styles */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-image {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .modal-nav:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-prev {
+            left: 15px;
+        }
+
+        .modal-next {
+            right: 15px;
+        }
+
+        .modal-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .modal-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+            
+            .modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 24px;
+            }
     </style>
 </head>
 <body>
@@ -131,12 +245,82 @@
 
         <a href="../archive.html" class="back-link">← BACK TO ARCHIVE</a>
     </div>
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="photo-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <img id="modal-image" class="modal-image" src="" alt="">
+            <div class="modal-nav modal-prev" id="modal-prev">‹</div>
+            <div class="modal-nav modal-next" id="modal-next">›</div>
+            <div class="modal-info" id="modal-info"></div>
+        </div>
+    </div>
 
     <script>
         // Photo data for July 5 - Camera A
-        const photos = [{'src': '../pictures/July 5 Camera A/DSCF0158.JPG', 'alt': 'DSCF0158.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0158.JPG', 'alt': 'DSCF0158.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0159.JPG', 'alt': 'DSCF0159.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0159.JPG', 'alt': 'DSCF0159.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0160.JPG', 'alt': 'DSCF0160.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0160.JPG', 'alt': 'DSCF0160.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0161.JPG', 'alt': 'DSCF0161.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0161.JPG', 'alt': 'DSCF0161.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0162.JPG', 'alt': 'DSCF0162.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0162.JPG', 'alt': 'DSCF0162.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0163.JPG', 'alt': 'DSCF0163.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0163.JPG', 'alt': 'DSCF0163.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0164.JPG', 'alt': 'DSCF0164.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0164.JPG', 'alt': 'DSCF0164.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0165.JPG', 'alt': 'DSCF0165.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0165.JPG', 'alt': 'DSCF0165.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0166.JPG', 'alt': 'DSCF0166.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0166.JPG', 'alt': 'DSCF0166.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0167.JPG', 'alt': 'DSCF0167.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0167.JPG', 'alt': 'DSCF0167.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0168.JPG', 'alt': 'DSCF0168.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0168.JPG', 'alt': 'DSCF0168.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0169.JPG', 'alt': 'DSCF0169.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0169.JPG', 'alt': 'DSCF0169.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0170.JPG', 'alt': 'DSCF0170.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0170.JPG', 'alt': 'DSCF0170.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0174.JPG', 'alt': 'DSCF0174.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0174.JPG', 'alt': 'DSCF0174.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0175.JPG', 'alt': 'DSCF0175.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0175.JPG', 'alt': 'DSCF0175.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0176.JPG', 'alt': 'DSCF0176.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0176.JPG', 'alt': 'DSCF0176.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0177.JPG', 'alt': 'DSCF0177.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0177.JPG', 'alt': 'DSCF0177.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0178.JPG', 'alt': 'DSCF0178.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0178.JPG', 'alt': 'DSCF0178.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0179.JPG', 'alt': 'DSCF0179.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0179.JPG', 'alt': 'DSCF0179.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0180.JPG', 'alt': 'DSCF0180.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0180.JPG', 'alt': 'DSCF0180.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0181.JPG', 'alt': 'DSCF0181.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0181.JPG', 'alt': 'DSCF0181.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0182.JPG', 'alt': 'DSCF0182.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0182.JPG', 'alt': 'DSCF0182.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0183.JPG', 'alt': 'DSCF0183.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0183.JPG', 'alt': 'DSCF0183.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0184.JPG', 'alt': 'DSCF0184.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0184.JPG', 'alt': 'DSCF0184.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0185.JPG', 'alt': 'DSCF0185.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0185.JPG', 'alt': 'DSCF0185.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0186.JPG', 'alt': 'DSCF0186.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0186.JPG', 'alt': 'DSCF0186.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0187.JPG', 'alt': 'DSCF0187.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0187.JPG', 'alt': 'DSCF0187.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0188.JPG', 'alt': 'DSCF0188.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0188.JPG', 'alt': 'DSCF0188.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0189.JPG', 'alt': 'DSCF0189.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0189.JPG', 'alt': 'DSCF0189.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0190.JPG', 'alt': 'DSCF0190.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0190.JPG', 'alt': 'DSCF0190.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0191.JPG', 'alt': 'DSCF0191.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0191.JPG', 'alt': 'DSCF0191.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0192.JPG', 'alt': 'DSCF0192.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0192.JPG', 'alt': 'DSCF0192.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0193.JPG', 'alt': 'DSCF0193.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0193.JPG', 'alt': 'DSCF0193.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0194.JPG', 'alt': 'DSCF0194.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0194.JPG', 'alt': 'DSCF0194.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0195.JPG', 'alt': 'DSCF0195.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0195.JPG', 'alt': 'DSCF0195.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0196.JPG', 'alt': 'DSCF0196.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0196.JPG', 'alt': 'DSCF0196.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0197.JPG', 'alt': 'DSCF0197.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0197.JPG', 'alt': 'DSCF0197.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0198.JPG', 'alt': 'DSCF0198.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0198.JPG', 'alt': 'DSCF0198.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0199.JPG', 'alt': 'DSCF0199.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0199.JPG', 'alt': 'DSCF0199.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0200.JPG', 'alt': 'DSCF0200.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0200.JPG', 'alt': 'DSCF0200.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0201.JPG', 'alt': 'DSCF0201.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0201.JPG', 'alt': 'DSCF0201.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0202.JPG', 'alt': 'DSCF0202.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0202.JPG', 'alt': 'DSCF0202.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0203.JPG', 'alt': 'DSCF0203.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0203.JPG', 'alt': 'DSCF0203.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0204.JPG', 'alt': 'DSCF0204.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0204.JPG', 'alt': 'DSCF0204.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0205.JPG', 'alt': 'DSCF0205.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0205.JPG', 'alt': 'DSCF0205.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0206.JPG', 'alt': 'DSCF0206.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0206.JPG', 'alt': 'DSCF0206.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0207.JPG', 'alt': 'DSCF0207.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0207.JPG', 'alt': 'DSCF0207.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0208.JPG', 'alt': 'DSCF0208.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0208.JPG', 'alt': 'DSCF0208.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0209.JPG', 'alt': 'DSCF0209.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0209.JPG', 'alt': 'DSCF0209.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0210.JPG', 'alt': 'DSCF0210.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0210.JPG', 'alt': 'DSCF0210.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0211.JPG', 'alt': 'DSCF0211.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0211.JPG', 'alt': 'DSCF0211.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0212.JPG', 'alt': 'DSCF0212.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0212.JPG', 'alt': 'DSCF0212.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0213.JPG', 'alt': 'DSCF0213.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0213.JPG', 'alt': 'DSCF0213.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0214.JPG', 'alt': 'DSCF0214.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0214.JPG', 'alt': 'DSCF0214.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0215.JPG', 'alt': 'DSCF0215.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0215.JPG', 'alt': 'DSCF0215.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0216.JPG', 'alt': 'DSCF0216.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0216.JPG', 'alt': 'DSCF0216.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0217.JPG', 'alt': 'DSCF0217.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0217.JPG', 'alt': 'DSCF0217.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0218.JPG', 'alt': 'DSCF0218.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0218.JPG', 'alt': 'DSCF0218.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0219.JPG', 'alt': 'DSCF0219.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0219.JPG', 'alt': 'DSCF0219.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0220.JPG', 'alt': 'DSCF0220.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0220.JPG', 'alt': 'DSCF0220.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0221.JPG', 'alt': 'DSCF0221.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0221.JPG', 'alt': 'DSCF0221.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0222.JPG', 'alt': 'DSCF0222.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0222.JPG', 'alt': 'DSCF0222.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0223.JPG', 'alt': 'DSCF0223.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0223.JPG', 'alt': 'DSCF0223.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0224.JPG', 'alt': 'DSCF0224.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0224.JPG', 'alt': 'DSCF0224.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0225.JPG', 'alt': 'DSCF0225.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0225.JPG', 'alt': 'DSCF0225.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0226.JPG', 'alt': 'DSCF0226.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0226.JPG', 'alt': 'DSCF0226.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0227.JPG', 'alt': 'DSCF0227.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0227.JPG', 'alt': 'DSCF0227.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0228.JPG', 'alt': 'DSCF0228.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0228.JPG', 'alt': 'DSCF0228.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0229.JPG', 'alt': 'DSCF0229.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0229.JPG', 'alt': 'DSCF0229.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0230.JPG', 'alt': 'DSCF0230.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0230.JPG', 'alt': 'DSCF0230.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0231.JPG', 'alt': 'DSCF0231.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0231.JPG', 'alt': 'DSCF0231.JPG'}];
+        const photos = [{'src': '../pictures/July 5 Camera A/DSCF0158.JPG', 'alt': 'DSCF0158.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0159.JPG', 'alt': 'DSCF0159.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0160.JPG', 'alt': 'DSCF0160.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0161.JPG', 'alt': 'DSCF0161.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0162.JPG', 'alt': 'DSCF0162.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0163.JPG', 'alt': 'DSCF0163.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0164.JPG', 'alt': 'DSCF0164.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0165.JPG', 'alt': 'DSCF0165.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0166.JPG', 'alt': 'DSCF0166.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0167.JPG', 'alt': 'DSCF0167.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0168.JPG', 'alt': 'DSCF0168.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0169.JPG', 'alt': 'DSCF0169.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0170.JPG', 'alt': 'DSCF0170.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0174.JPG', 'alt': 'DSCF0174.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0175.JPG', 'alt': 'DSCF0175.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0176.JPG', 'alt': 'DSCF0176.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0177.JPG', 'alt': 'DSCF0177.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0178.JPG', 'alt': 'DSCF0178.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0179.JPG', 'alt': 'DSCF0179.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0180.JPG', 'alt': 'DSCF0180.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0181.JPG', 'alt': 'DSCF0181.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0182.JPG', 'alt': 'DSCF0182.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0183.JPG', 'alt': 'DSCF0183.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0184.JPG', 'alt': 'DSCF0184.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0185.JPG', 'alt': 'DSCF0185.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0186.JPG', 'alt': 'DSCF0186.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0187.JPG', 'alt': 'DSCF0187.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0188.JPG', 'alt': 'DSCF0188.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0189.JPG', 'alt': 'DSCF0189.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0190.JPG', 'alt': 'DSCF0190.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0191.JPG', 'alt': 'DSCF0191.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0192.JPG', 'alt': 'DSCF0192.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0193.JPG', 'alt': 'DSCF0193.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0194.JPG', 'alt': 'DSCF0194.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0195.JPG', 'alt': 'DSCF0195.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0196.JPG', 'alt': 'DSCF0196.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0197.JPG', 'alt': 'DSCF0197.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0198.JPG', 'alt': 'DSCF0198.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0199.JPG', 'alt': 'DSCF0199.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0200.JPG', 'alt': 'DSCF0200.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0201.JPG', 'alt': 'DSCF0201.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0202.JPG', 'alt': 'DSCF0202.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0203.JPG', 'alt': 'DSCF0203.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0204.JPG', 'alt': 'DSCF0204.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0205.JPG', 'alt': 'DSCF0205.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0206.JPG', 'alt': 'DSCF0206.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0207.JPG', 'alt': 'DSCF0207.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0208.JPG', 'alt': 'DSCF0208.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0209.JPG', 'alt': 'DSCF0209.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0210.JPG', 'alt': 'DSCF0210.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0211.JPG', 'alt': 'DSCF0211.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0212.JPG', 'alt': 'DSCF0212.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0213.JPG', 'alt': 'DSCF0213.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0214.JPG', 'alt': 'DSCF0214.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0215.JPG', 'alt': 'DSCF0215.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0216.JPG', 'alt': 'DSCF0216.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0217.JPG', 'alt': 'DSCF0217.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0218.JPG', 'alt': 'DSCF0218.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0219.JPG', 'alt': 'DSCF0219.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0220.JPG', 'alt': 'DSCF0220.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0221.JPG', 'alt': 'DSCF0221.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0222.JPG', 'alt': 'DSCF0222.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0223.JPG', 'alt': 'DSCF0223.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0224.JPG', 'alt': 'DSCF0224.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0225.JPG', 'alt': 'DSCF0225.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0226.JPG', 'alt': 'DSCF0226.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0227.JPG', 'alt': 'DSCF0227.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0228.JPG', 'alt': 'DSCF0228.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0229.JPG', 'alt': 'DSCF0229.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0230.JPG', 'alt': 'DSCF0230.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0231.JPG', 'alt': 'DSCF0231.JPG'}];
         
         let loadedImages = new Set();
+        let currentModalIndex = 0;
+
+        // Modal functionality
+        const modal = document.getElementById('photo-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalClose = document.getElementById('modal-close');
+        const modalPrev = document.getElementById('modal-prev');
+        const modalNext = document.getElementById('modal-next');
+        const modalInfo = document.getElementById('modal-info');
+
+        function openModal(index) {
+            currentModalIndex = index;
+            modalImage.src = photos[index].src;
+            modalImage.alt = photos[index].alt;
+            modalInfo.textContent = `${index + 1} of ${photos.length}`;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function showPrevImage() {
+            currentModalIndex = (currentModalIndex - 1 + photos.length) % photos.length;
+            openModal(currentModalIndex);
+        }
+
+        function showNextImage() {
+            currentModalIndex = (currentModalIndex + 1) % photos.length;
+            openModal(currentModalIndex);
+        }
+
+        // Event listeners for modal
+        modalClose.addEventListener('click', closeModal);
+        modalPrev.addEventListener('click', showPrevImage);
+        modalNext.addEventListener('click', showNextImage);
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display === 'block') {
+                switch(e.key) {
+                    case 'Escape':
+                        closeModal();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                }
+            });
         let currentBatch = 0;
         const batchSize = 6; // Load 6 images at a time
 
@@ -156,6 +340,12 @@
             
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
+            
+            
+            // Add click event for modal
+            photoItem.addEventListener('click', function() {
+                openModal(index);
+            });
             
             return photoItem;
         }
