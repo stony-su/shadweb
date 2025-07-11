@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>July 5 - Camera A - Shad Daily Photo Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman:ital,wght@0,400;0,700;1,400&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .gallery-container {
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 10px;
+            margin-top: 80px;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-header h1 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-header p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        
+        .photo-item.loading img {
+            opacity: 0;
+        }
+        
+        .photo-item.loaded img {
+            opacity: 1;
+        }
+        
+        .loading-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .back-link:hover {
+            background: #333;
+        }
+        
+        .memory-info {
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header" class="header">
+        <div class="header-content">
+            <div class="newspaper-title">
+                <h1>SHAD DAILY</h1>
+                <div class="subtitle">SHAD WATERLOO</div>
+            </div>
+            <div class="header-info">
+                <div class="date">December 15, 2025</div>
+                <div class="price">25¢</div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <a href="../index.html#front-page">FRONT PAGE</a>
+            <a href="../index.html#sNews">SHAD NEWS</a>
+            <a href="../index.html#dailyQC">DAILY Q+C</a>
+            <a href="../index.html#classifieds">CLASSIFIEDS</a>
+            <a href="../archive.html">ARCHIVE</a>
+        </nav>
+    </header>
+
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1>JULY 5 - CAMERA A</h1>
+            <p>Photo Collection</p>
+        </div>
+
+        <div class="photo-grid" id="photo-grid">
+            <!-- Photos will be loaded dynamically -->
+        </div>
+
+        <div class="memory-info" id="memory-info">
+            Loading photos...
+        </div>
+
+        <a href="../archive.html" class="back-link">← BACK TO ARCHIVE</a>
+    </div>
+
+    <script>
+        // Photo data for July 5 - Camera A
+        const photos = [{'src': '../pictures/July 5 Camera A/DSCF0158.JPG', 'alt': 'DSCF0158.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0158.JPG', 'alt': 'DSCF0158.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0159.JPG', 'alt': 'DSCF0159.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0159.JPG', 'alt': 'DSCF0159.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0160.JPG', 'alt': 'DSCF0160.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0160.JPG', 'alt': 'DSCF0160.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0161.JPG', 'alt': 'DSCF0161.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0161.JPG', 'alt': 'DSCF0161.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0162.JPG', 'alt': 'DSCF0162.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0162.JPG', 'alt': 'DSCF0162.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0163.JPG', 'alt': 'DSCF0163.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0163.JPG', 'alt': 'DSCF0163.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0164.JPG', 'alt': 'DSCF0164.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0164.JPG', 'alt': 'DSCF0164.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0165.JPG', 'alt': 'DSCF0165.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0165.JPG', 'alt': 'DSCF0165.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0166.JPG', 'alt': 'DSCF0166.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0166.JPG', 'alt': 'DSCF0166.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0167.JPG', 'alt': 'DSCF0167.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0167.JPG', 'alt': 'DSCF0167.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0168.JPG', 'alt': 'DSCF0168.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0168.JPG', 'alt': 'DSCF0168.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0169.JPG', 'alt': 'DSCF0169.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0169.JPG', 'alt': 'DSCF0169.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0170.JPG', 'alt': 'DSCF0170.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0170.JPG', 'alt': 'DSCF0170.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0174.JPG', 'alt': 'DSCF0174.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0174.JPG', 'alt': 'DSCF0174.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0175.JPG', 'alt': 'DSCF0175.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0175.JPG', 'alt': 'DSCF0175.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0176.JPG', 'alt': 'DSCF0176.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0176.JPG', 'alt': 'DSCF0176.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0177.JPG', 'alt': 'DSCF0177.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0177.JPG', 'alt': 'DSCF0177.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0178.JPG', 'alt': 'DSCF0178.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0178.JPG', 'alt': 'DSCF0178.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0179.JPG', 'alt': 'DSCF0179.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0179.JPG', 'alt': 'DSCF0179.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0180.JPG', 'alt': 'DSCF0180.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0180.JPG', 'alt': 'DSCF0180.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0181.JPG', 'alt': 'DSCF0181.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0181.JPG', 'alt': 'DSCF0181.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0182.JPG', 'alt': 'DSCF0182.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0182.JPG', 'alt': 'DSCF0182.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0183.JPG', 'alt': 'DSCF0183.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0183.JPG', 'alt': 'DSCF0183.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0184.JPG', 'alt': 'DSCF0184.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0184.JPG', 'alt': 'DSCF0184.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0185.JPG', 'alt': 'DSCF0185.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0185.JPG', 'alt': 'DSCF0185.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0186.JPG', 'alt': 'DSCF0186.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0186.JPG', 'alt': 'DSCF0186.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0187.JPG', 'alt': 'DSCF0187.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0187.JPG', 'alt': 'DSCF0187.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0188.JPG', 'alt': 'DSCF0188.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0188.JPG', 'alt': 'DSCF0188.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0189.JPG', 'alt': 'DSCF0189.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0189.JPG', 'alt': 'DSCF0189.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0190.JPG', 'alt': 'DSCF0190.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0190.JPG', 'alt': 'DSCF0190.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0191.JPG', 'alt': 'DSCF0191.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0191.JPG', 'alt': 'DSCF0191.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0192.JPG', 'alt': 'DSCF0192.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0192.JPG', 'alt': 'DSCF0192.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0193.JPG', 'alt': 'DSCF0193.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0193.JPG', 'alt': 'DSCF0193.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0194.JPG', 'alt': 'DSCF0194.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0194.JPG', 'alt': 'DSCF0194.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0195.JPG', 'alt': 'DSCF0195.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0195.JPG', 'alt': 'DSCF0195.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0196.JPG', 'alt': 'DSCF0196.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0196.JPG', 'alt': 'DSCF0196.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0197.JPG', 'alt': 'DSCF0197.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0197.JPG', 'alt': 'DSCF0197.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0198.JPG', 'alt': 'DSCF0198.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0198.JPG', 'alt': 'DSCF0198.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0199.JPG', 'alt': 'DSCF0199.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0199.JPG', 'alt': 'DSCF0199.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0200.JPG', 'alt': 'DSCF0200.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0200.JPG', 'alt': 'DSCF0200.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0201.JPG', 'alt': 'DSCF0201.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0201.JPG', 'alt': 'DSCF0201.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0202.JPG', 'alt': 'DSCF0202.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0202.JPG', 'alt': 'DSCF0202.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0203.JPG', 'alt': 'DSCF0203.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0203.JPG', 'alt': 'DSCF0203.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0204.JPG', 'alt': 'DSCF0204.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0204.JPG', 'alt': 'DSCF0204.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0205.JPG', 'alt': 'DSCF0205.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0205.JPG', 'alt': 'DSCF0205.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0206.JPG', 'alt': 'DSCF0206.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0206.JPG', 'alt': 'DSCF0206.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0207.JPG', 'alt': 'DSCF0207.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0207.JPG', 'alt': 'DSCF0207.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0208.JPG', 'alt': 'DSCF0208.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0208.JPG', 'alt': 'DSCF0208.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0209.JPG', 'alt': 'DSCF0209.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0209.JPG', 'alt': 'DSCF0209.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0210.JPG', 'alt': 'DSCF0210.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0210.JPG', 'alt': 'DSCF0210.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0211.JPG', 'alt': 'DSCF0211.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0211.JPG', 'alt': 'DSCF0211.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0212.JPG', 'alt': 'DSCF0212.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0212.JPG', 'alt': 'DSCF0212.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0213.JPG', 'alt': 'DSCF0213.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0213.JPG', 'alt': 'DSCF0213.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0214.JPG', 'alt': 'DSCF0214.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0214.JPG', 'alt': 'DSCF0214.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0215.JPG', 'alt': 'DSCF0215.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0215.JPG', 'alt': 'DSCF0215.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0216.JPG', 'alt': 'DSCF0216.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0216.JPG', 'alt': 'DSCF0216.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0217.JPG', 'alt': 'DSCF0217.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0217.JPG', 'alt': 'DSCF0217.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0218.JPG', 'alt': 'DSCF0218.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0218.JPG', 'alt': 'DSCF0218.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0219.JPG', 'alt': 'DSCF0219.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0219.JPG', 'alt': 'DSCF0219.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0220.JPG', 'alt': 'DSCF0220.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0220.JPG', 'alt': 'DSCF0220.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0221.JPG', 'alt': 'DSCF0221.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0221.JPG', 'alt': 'DSCF0221.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0222.JPG', 'alt': 'DSCF0222.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0222.JPG', 'alt': 'DSCF0222.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0223.JPG', 'alt': 'DSCF0223.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0223.JPG', 'alt': 'DSCF0223.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0224.JPG', 'alt': 'DSCF0224.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0224.JPG', 'alt': 'DSCF0224.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0225.JPG', 'alt': 'DSCF0225.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0225.JPG', 'alt': 'DSCF0225.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0226.JPG', 'alt': 'DSCF0226.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0226.JPG', 'alt': 'DSCF0226.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0227.JPG', 'alt': 'DSCF0227.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0227.JPG', 'alt': 'DSCF0227.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0228.JPG', 'alt': 'DSCF0228.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0228.JPG', 'alt': 'DSCF0228.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0229.JPG', 'alt': 'DSCF0229.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0229.JPG', 'alt': 'DSCF0229.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0230.JPG', 'alt': 'DSCF0230.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0230.JPG', 'alt': 'DSCF0230.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0231.JPG', 'alt': 'DSCF0231.JPG'}, {'src': '../pictures/July 5 Camera A/DSCF0231.JPG', 'alt': 'DSCF0231.JPG'}];
+        
+        let loadedImages = new Set();
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
+
+        function createPhotoElement(photo, index) {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item loading';
+            photoItem.dataset.index = index;
+            
+            const img = document.createElement('img');
+            img.src = photo.src;
+            img.alt = photo.alt;
+            img.loading = 'lazy';
+            
+            const placeholder = document.createElement('div');
+            placeholder.className = 'loading-placeholder';
+            placeholder.textContent = `Loading...`;
+            
+            photoItem.appendChild(img);
+            photoItem.appendChild(placeholder);
+            
+            return photoItem;
+        }
+
+        function loadNextBatch() {
+            const startIndex = currentBatch * batchSize;
+            const endIndex = Math.min(startIndex + batchSize, photos.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const photoItem = document.querySelector(`[data-index="${i}"]`);
+                if (photoItem) {
+                    const img = photoItem.querySelector('img');
+                    const placeholder = photoItem.querySelector('.loading-placeholder');
+                    
+                    img.onload = function() {
+                        photoItem.classList.remove('loading');
+                        photoItem.classList.add('loaded');
+                        placeholder.style.display = 'none';
+                        loadedImages.add(i);
+                        updateMemoryInfo();
+                    };
+                    
+                    img.onerror = function() {
+                        placeholder.textContent = 'Error loading';
+                        placeholder.style.color = '#ff0000';
+                    };
+                }
+            }
+            
+            currentBatch++;
+        }
+
+        function updateMemoryInfo() {
+            const memoryInfo = document.getElementById('memory-info');
+            memoryInfo.textContent = `Loaded ${loadedImages.size} of ${photos.length} photos`;
+        }
+
+        function unloadDistantImages() {
+            // Remove images that are far from viewport to save memory
+            const viewportHeight = window.innerHeight;
+            const photoItems = document.querySelectorAll('.photo-item');
+            
+            photoItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                const isVisible = rect.top < viewportHeight + 200 && rect.bottom > -200;
+                
+                if (!isVisible && loadedImages.has(index)) {
+                    const img = item.querySelector('img');
+                    img.src = ''; // Clear src to unload from memory
+                    item.classList.remove('loaded');
+                    item.classList.add('loading');
+                    loadedImages.delete(index);
+                    
+                    const placeholder = item.querySelector('.loading-placeholder');
+                    placeholder.style.display = 'block';
+                    placeholder.textContent = 'Unloaded';
+                }
+            });
+            
+            updateMemoryInfo();
+        }
+
+        // Initialize gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoGrid = document.getElementById('photo-grid');
+            
+            // Create photo elements
+            photos.forEach((photo, index) => {
+                const photoElement = createPhotoElement(photo, index);
+                photoGrid.appendChild(photoElement);
+            });
+            
+            // Load first batch
+            loadNextBatch();
+            
+            // Set up intersection observer for lazy loading
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt(entry.target.dataset.index);
+                        if (!loadedImages.has(index)) {
+                            const img = entry.target.querySelector('img');
+                            img.src = photos[index].src;
+                        }
+                    }
+                });
+            }, { rootMargin: '50px' });
+            
+            // Observe all photo items
+            document.querySelectorAll('.photo-item').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Set up scroll listener for memory management
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(unloadDistantImages, 1000);
+            });
+            
+            // Load more batches as needed
+            setInterval(() => {
+                if (currentBatch * batchSize < photos.length) {
+                    loadNextBatch();
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photos From Staff - Shad Daily Photo Archive</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Times+New+Roman:ital,wght@0,400;0,700;1,400&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .gallery-container {
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 10px;
+            margin-top: 80px;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .gallery-header h1 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .gallery-header p {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .photo-item {
+            position: relative;
+            aspect-ratio: 1;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            overflow: hidden;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        
+        .photo-item.loading img {
+            opacity: 0;
+        }
+        
+        .photo-item.loaded img {
+            opacity: 1;
+        }
+        
+        .loading-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            color: #999;
+            text-align: center;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .back-link:hover {
+            background: #333;
+        }
+        
+        .memory-info {
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header" class="header">
+        <div class="header-content">
+            <div class="newspaper-title">
+                <h1>SHAD DAILY</h1>
+                <div class="subtitle">SHAD WATERLOO</div>
+            </div>
+            <div class="header-info">
+                <div class="date">December 15, 2025</div>
+                <div class="price">25¢</div>
+            </div>
+        </div>
+        <nav class="nav-menu">
+            <a href="../index.html#front-page">FRONT PAGE</a>
+            <a href="../index.html#sNews">SHAD NEWS</a>
+            <a href="../index.html#dailyQC">DAILY Q+C</a>
+            <a href="../index.html#classifieds">CLASSIFIEDS</a>
+            <a href="../archive.html">ARCHIVE</a>
+        </nav>
+    </header>
+
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h1>PHOTOS FROM STAFF</h1>
+            <p>Staff Photo Collection</p>
+        </div>
+
+        <div class="photo-grid" id="photo-grid">
+            <!-- Photos will be loaded dynamically -->
+        </div>
+
+        <div class="memory-info" id="memory-info">
+            Loading photos...
+        </div>
+
+        <a href="../archive.html" class="back-link">← BACK TO ARCHIVE</a>
+    </div>
+
+    <script>
+        // Photo data for Photos From Staff
+        const photos = [
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250701_171729.jpg', alt: 'Staff Photo 20250701_171729' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250701_171738.jpg', alt: 'Staff Photo 20250701_171738' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_202805.jpg', alt: 'Staff Photo 20250704_202805' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_202810.jpg', alt: 'Staff Photo 20250704_202810' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203104.jpg', alt: 'Staff Photo 20250704_203104' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203108.jpg', alt: 'Staff Photo 20250704_203108' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203138.jpg', alt: 'Staff Photo 20250704_203138' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203140.jpg', alt: 'Staff Photo 20250704_203140' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203142.jpg', alt: 'Staff Photo 20250704_203142' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203144.jpg', alt: 'Staff Photo 20250704_203144' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203242.jpg', alt: 'Staff Photo 20250704_203242' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203244.jpg', alt: 'Staff Photo 20250704_203244' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_203246.jpg', alt: 'Staff Photo 20250704_203246' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_204443.jpg', alt: 'Staff Photo 20250704_204443' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_204452.jpg', alt: 'Staff Photo 20250704_204452' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_204503.jpg', alt: 'Staff Photo 20250704_204503' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_204509.jpg', alt: 'Staff Photo 20250704_204509' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250704_204615.jpg', alt: 'Staff Photo 20250704_204615' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250705_155951.jpg', alt: 'Staff Photo 20250705_155951' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250705_160022.jpg', alt: 'Staff Photo 20250705_160022' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250705_160027.jpg', alt: 'Staff Photo 20250705_160027' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250705_205319.jpg', alt: 'Staff Photo 20250705_205319' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194619.jpg', alt: 'Staff Photo 20250707_194619' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194631.jpg', alt: 'Staff Photo 20250707_194631' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194651.jpg', alt: 'Staff Photo 20250707_194651' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194653.jpg', alt: 'Staff Photo 20250707_194653' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194654.jpg', alt: 'Staff Photo 20250707_194654' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194655.jpg', alt: 'Staff Photo 20250707_194655' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194658(0).jpg', alt: 'Staff Photo 20250707_194658' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_194659.jpg', alt: 'Staff Photo 20250707_194659' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_203843.jpg', alt: 'Staff Photo 20250707_203843' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250707_203847.jpg', alt: 'Staff Photo 20250707_203847' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6115.HEIC', alt: 'Staff Photo IMG_6115' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6114.HEIC', alt: 'Staff Photo IMG_6114' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6138.HEIC', alt: 'Staff Photo IMG_6138' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6132.HEIC', alt: 'Staff Photo IMG_6132' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6131.HEIC', alt: 'Staff Photo IMG_6131' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6139.HEIC', alt: 'Staff Photo IMG_6139' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6101.HEIC', alt: 'Staff Photo IMG_6101' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6106.HEIC', alt: 'Staff Photo IMG_6106' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6129.HEIC', alt: 'Staff Photo IMG_6129' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6095.HEIC', alt: 'Staff Photo IMG_6095' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6136.HEIC', alt: 'Staff Photo IMG_6136' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6109.HEIC', alt: 'Staff Photo IMG_6109' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6100.HEIC', alt: 'Staff Photo IMG_6100' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6111.HEIC', alt: 'Staff Photo IMG_6111' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6107.HEIC', alt: 'Staff Photo IMG_6107' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6104.HEIC', alt: 'Staff Photo IMG_6104' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6105.HEIC', alt: 'Staff Photo IMG_6105' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6080.HEIC', alt: 'Staff Photo IMG_6080' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6087.HEIC', alt: 'Staff Photo IMG_6087' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6085.HEIC', alt: 'Staff Photo IMG_6085' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6059.HEIC', alt: 'Staff Photo IMG_6059' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6065.HEIC', alt: 'Staff Photo IMG_6065' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6045.HEIC', alt: 'Staff Photo IMG_6045' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6036.HEIC', alt: 'Staff Photo IMG_6036' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6040.HEIC', alt: 'Staff Photo IMG_6040' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6038.HEIC', alt: 'Staff Photo IMG_6038' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_6033.HEIC', alt: 'Staff Photo IMG_6033' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9091.HEIC', alt: 'Staff Photo IMG_9091' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9090.HEIC', alt: 'Staff Photo IMG_9090' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9095.HEIC', alt: 'Staff Photo IMG_9095' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9094.HEIC', alt: 'Staff Photo IMG_9094' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9073.HEIC', alt: 'Staff Photo IMG_9073' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9082.HEIC', alt: 'Staff Photo IMG_9082' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9075.HEIC', alt: 'Staff Photo IMG_9075' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9096.HEIC', alt: 'Staff Photo IMG_9096' },
+            { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/IMG_9100.HEIC', alt: 'Staff Photo IMG_9100' }
+        ];
+        
+        let loadedImages = new Set();
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
+
+        function createPhotoElement(photo, index) {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-item loading';
+            photoItem.dataset.index = index;
+            
+            const img = document.createElement('img');
+            img.src = photo.src;
+            img.alt = photo.alt;
+            img.loading = 'lazy';
+            
+            const placeholder = document.createElement('div');
+            placeholder.className = 'loading-placeholder';
+            placeholder.textContent = `Loading...`;
+            
+            photoItem.appendChild(img);
+            photoItem.appendChild(placeholder);
+            
+            return photoItem;
+        }
+
+        function loadNextBatch() {
+            const startIndex = currentBatch * batchSize;
+            const endIndex = Math.min(startIndex + batchSize, photos.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                const photoItem = document.querySelector(`[data-index="${i}"]`);
+                if (photoItem) {
+                    const img = photoItem.querySelector('img');
+                    const placeholder = photoItem.querySelector('.loading-placeholder');
+                    
+                    img.onload = function() {
+                        photoItem.classList.remove('loading');
+                        photoItem.classList.add('loaded');
+                        placeholder.style.display = 'none';
+                        loadedImages.add(i);
+                        updateMemoryInfo();
+                    };
+                    
+                    img.onerror = function() {
+                        placeholder.textContent = 'Error loading';
+                        placeholder.style.color = '#ff0000';
+                    };
+                }
+            }
+            
+            currentBatch++;
+        }
+
+        function updateMemoryInfo() {
+            const memoryInfo = document.getElementById('memory-info');
+            memoryInfo.textContent = `Loaded ${loadedImages.size} of ${photos.length} photos`;
+        }
+
+        function unloadDistantImages() {
+            // Remove images that are far from viewport to save memory
+            const viewportHeight = window.innerHeight;
+            const photoItems = document.querySelectorAll('.photo-item');
+            
+            photoItems.forEach((item, index) => {
+                const rect = item.getBoundingClientRect();
+                const isVisible = rect.top < viewportHeight + 200 && rect.bottom > -200;
+                
+                if (!isVisible && loadedImages.has(index)) {
+                    const img = item.querySelector('img');
+                    img.src = ''; // Clear src to unload from memory
+                    item.classList.remove('loaded');
+                    item.classList.add('loading');
+                    loadedImages.delete(index);
+                    
+                    const placeholder = item.querySelector('.loading-placeholder');
+                    placeholder.style.display = 'block';
+                    placeholder.textContent = 'Unloaded';
+                }
+            });
+            
+            updateMemoryInfo();
+        }
+
+        // Initialize gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            const photoGrid = document.getElementById('photo-grid');
+            
+            // Create photo elements
+            photos.forEach((photo, index) => {
+                const photoElement = createPhotoElement(photo, index);
+                photoGrid.appendChild(photoElement);
+            });
+            
+            // Load first batch
+            loadNextBatch();
+            
+            // Set up intersection observer for lazy loading
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt(entry.target.dataset.index);
+                        if (!loadedImages.has(index)) {
+                            const img = entry.target.querySelector('img');
+                            img.src = photos[index].src;
+                        }
+                    }
+                });
+            }, { rootMargin: '50px' });
+            
+            // Observe all photo items
+            document.querySelectorAll('.photo-item').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Set up scroll listener for memory management
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(unloadDistantImages, 1000);
+            });
+            
+            // Load more batches as needed
+            setInterval(() => {
+                if (currentBatch * batchSize < photos.length) {
+                    loadNextBatch();
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html> 
