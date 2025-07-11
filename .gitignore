@@ -1,2 +1,13 @@
-# Ignore everything in the pictures folder
-pictures/ 
+# Ignore everything in the pictures folder except specific folders
+pictures/*
+
+# But don't ignore these specific folders
+!pictures/el photos/
+!pictures/July 1 Camera A/
+!pictures/July 1 Camera B/
+!pictures/July 2 Camera A/
+!pictures/July 2 Camera B/
+!pictures/July 3 Camera A/
+!pictures/July 3 Camera B/
+!pictures/July 4 Camera A/
+!pictures/July 4 Camera B/ 
