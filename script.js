@@ -1,5 +1,57 @@
 // Disappearing header functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Retro animation functions
+    function createRetroOverlay(className, barClassName) {
+        const overlay = document.createElement('div');
+        overlay.className = className;
+        
+        // Create 12 bars for the animation
+        for (let i = 0; i < 12; i++) {
+            const bar = document.createElement('div');
+            bar.className = barClassName;
+            overlay.appendChild(bar);
+        }
+        
+        return overlay;
+    }
+    
+    function triggerRetroAnimation() {
+        const body = document.body;
+        body.classList.add('animating');
+        
+        const overlay = createRetroOverlay('retro-overlay', 'retro-bar');
+        document.body.appendChild(overlay);
+        
+        // Remove overlay after animation completes
+        setTimeout(() => {
+            if (overlay.parentNode) {
+                overlay.parentNode.removeChild(overlay);
+            }
+            body.classList.remove('animating');
+        }, 1200); // Slightly longer than animation duration
+    }
+    
+    function triggerModeSwitchAnimation() {
+        const body = document.body;
+        body.classList.add('animating');
+        
+        const overlay = createRetroOverlay('mode-switch-overlay', 'mode-switch-bar');
+        document.body.appendChild(overlay);
+        
+        // Remove overlay after animation completes
+        setTimeout(() => {
+            if (overlay.parentNode) {
+                overlay.parentNode.removeChild(overlay);
+            }
+            body.classList.remove('animating');
+        }, 800); // Slightly longer than animation duration
+    }
+    
+    // Trigger initial page load animation
+    setTimeout(() => {
+        triggerRetroAnimation();
+    }, 100);
+    
     // Set current date
     function setCurrentDate() {
         const dateElement = document.querySelector('.date');
@@ -284,41 +336,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const desktopToggle = document.getElementById('desktop-toggle');
     const body = document.body;
     
+    // Retro animation functions for mode switching
+    function createRetroOverlay(className, barClassName) {
+        const overlay = document.createElement('div');
+        overlay.className = className;
+        
+        // Create 12 bars for the animation
+        for (let i = 0; i < 12; i++) {
+            const bar = document.createElement('div');
+            bar.className = barClassName;
+            overlay.appendChild(bar);
+        }
+        
+        return overlay;
+    }
+    
+    function triggerModeSwitchAnimation() {
+        const body = document.body;
+        body.classList.add('animating');
+        
+        const overlay = createRetroOverlay('mode-switch-overlay', 'mode-switch-bar');
+        document.body.appendChild(overlay);
+        
+        // Remove overlay after animation completes
+        setTimeout(() => {
+            if (overlay.parentNode) {
+                overlay.parentNode.removeChild(overlay);
+            }
+            body.classList.remove('animating');
+        }, 800); // Slightly longer than animation duration
+    }
+    
     // Check if desktop mode preference is stored
     const isDesktopMode = localStorage.getItem('shadweb-desktop-mode') === 'true';
     
     // Apply desktop mode if previously enabled
     if (isDesktopMode) {
         body.classList.add('desktop-mode');
-        updateToggleButton(true);
-    }
-    
-    // Desktop mode toggle functionality
-    if (desktopToggle) {
-        desktopToggle.addEventListener('click', function() {
-            const isCurrentlyDesktop = body.classList.contains('desktop-mode');
-            
-            if (isCurrentlyDesktop) {
-                // Switch to mobile mode
-                body.classList.remove('desktop-mode');
-                localStorage.setItem('shadweb-desktop-mode', 'false');
-                updateToggleButton(false);
-            } else {
-                // Switch to desktop mode
-                body.classList.add('desktop-mode');
-                localStorage.setItem('shadweb-desktop-mode', 'true');
-                updateToggleButton(true);
-            }
-            
-            // Add a subtle transition effect
-            body.style.transition = 'all 0.3s ease';
-            setTimeout(() => {
-                body.style.transition = '';
-            }, 300);
-        });
     }
     
     function updateToggleButton(isDesktopMode) {
+        if (!desktopToggle) return;
+        
         const toggleIcon = desktopToggle.querySelector('.toggle-icon');
         const toggleText = desktopToggle.querySelector('.toggle-text');
         
@@ -330,6 +389,42 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleText.textContent = 'Desktop Mode';
         }
     }
+    
+    // Initialize button state
+    updateToggleButton(isDesktopMode);
+    
+    // Desktop mode toggle functionality
+    if (desktopToggle) {
+        desktopToggle.addEventListener('click', function() {
+            const isCurrentlyDesktop = body.classList.contains('desktop-mode');
+            
+            // Trigger mode switch animation first
+            triggerModeSwitchAnimation();
+            
+            // Delay the actual mode switch to allow animation to start
+            setTimeout(() => {
+                if (isCurrentlyDesktop) {
+                    // Switch to mobile mode
+                    body.classList.remove('desktop-mode');
+                    localStorage.setItem('shadweb-desktop-mode', 'false');
+                    updateToggleButton(false);
+                } else {
+                    // Switch to desktop mode
+                    body.classList.add('desktop-mode');
+                    localStorage.setItem('shadweb-desktop-mode', 'true');
+                    updateToggleButton(true);
+                }
+                
+                // Add a subtle transition effect
+                body.style.transition = 'all 0.3s ease';
+                setTimeout(() => {
+                    body.style.transition = '';
+                }, 300);
+            }, 100); // Small delay to let animation start
+        });
+    }
+    
+
     
     // Auto-detect screen size and suggest desktop mode for large screens
     function checkScreenSize() {
