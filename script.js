@@ -15,21 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return overlay;
     }
     
-    function triggerRetroAnimation() {
-        const body = document.body;
-        body.classList.add('animating');
-        
-        const overlay = createRetroOverlay('retro-overlay', 'retro-bar');
-        document.body.appendChild(overlay);
-        
-        // Remove overlay after animation completes
-        setTimeout(() => {
-            if (overlay.parentNode) {
-                overlay.parentNode.removeChild(overlay);
-            }
-            body.classList.remove('animating');
-        }, 1200); // Slightly longer than animation duration
-    }
+
     
     function triggerModeSwitchAnimation() {
         const body = document.body;
@@ -47,10 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 800); // Slightly longer than animation duration
     }
     
-    // Trigger initial page load animation
-    setTimeout(() => {
-        triggerRetroAnimation();
-    }, 100);
+
     
     // Set current date
     function setCurrentDate() {
