@@ -21,24 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const header = document.getElementById('main-header');
     let lastScrollTop = 0;
     let scrollThreshold = 50; // Minimum scroll distance before hiding header
-    let shakeTriggered = false; // Prevent multiple shakes
     
     // Function to handle scroll events
     function handleScroll() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Check if user has scrolled to the bottom
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-        const scrolledToBottom = windowHeight + scrollTop >= documentHeight - 10; // 10px threshold
-        
-        // Trigger shake animation when reaching bottom
-        if (scrolledToBottom && !shakeTriggered) {
-            triggerShakeAnimation();
-            shakeTriggered = true;
-        } else if (!scrolledToBottom) {
-            shakeTriggered = false; // Reset when not at bottom
-        }
         
         // Only hide/show header if we've scrolled more than the threshold
         if (Math.abs(scrollTop - lastScrollTop) > scrollThreshold) {
@@ -51,22 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             lastScrollTop = scrollTop;
         }
-    }
-    
-    // Function to trigger shake animation
-    function triggerShakeAnimation() {
-        const body = document.body;
-        
-        // Add shake class to trigger animation
-        body.classList.add('shake');
-        
-        // Remove the class after animation completes to allow re-triggering
-        setTimeout(() => {
-            body.classList.remove('shake');
-        }, 500); // Match the animation duration (0.5s)
-        
-        // Optional: Add a subtle sound effect or haptic feedback
-        console.log('Screen shake triggered!');
     }
     
     // Add scroll event listener with throttling for better performance
@@ -223,46 +193,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     95: "Thunderstorm"
                 };
 
-                // 7-day forecast
-                const forecast7 = document.getElementById('forecast-7day');
-                if (forecast7 && data.daily && data.daily.time) {
-                    // Find tomorrow's index in the daily.time array
-                    const today = new Date();
-                    today.setDate(today.getDate());
-                    today.setHours(0, 0, 0, 0);
-                    let startIdx = 0;
-                    for (let i = 0; i < data.daily.time.length; i++) {
-                        const day = new Date(data.daily.time[i]);
-                        day.setHours(0, 0, 0, 0);
-                        if (day.getTime() === today.getTime()) {
-                            startIdx = i;
-                            break;
-                        }
-                    }
-
-                    let html = '<div class="forecast7-title" style="font-size:10px;margin-top:6px;">7-Day Forecast</div>';
-                    html += '<div class="forecast7-list" style="display:flex;flex-direction:column;background:#e4e4e4;padding:4px 0;border-radius:4px;">';
-                    for (let i = 0; i < 7; i++) {
-                        const idx = (startIdx + i) % data.daily.time.length;
-                        const day = new Date(data.daily.time[idx]);
-                        day.setHours(0, 0, 0, 0);
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        const dayName = day.toLocaleDateString('en-US', { weekday: 'short' });
-                        const tmax = Math.round(data.daily.temperature_2m_max[idx]);
-                        const tmin = Math.round(data.daily.temperature_2m_min[idx]);
-                        const wcode = data.daily.weathercode[idx];
-                        // Highlight today's row
-                        const highlight = day.getTime() === today.getTime() ? "background:#c4c4c4;font-weight:bold;" : "";
-                        html += `<div style="display:flex;justify-content:space-between;align-items:center;font-size:9px;padding:2px 8px;${i !== 0 ? 'border-top:1px solid #000;' : ''}${highlight}">
-        <span>${dayName}</span>
-        <span>${conditions[wcode] || ''}</span>
-        <span>${tmax}°/${tmin}°</span>
-    </div>`;
-                    }
-                    html += '</div>';
-                    forecast7.innerHTML = html;
-                }
+                weatherInfo.querySelector('.temp').textContent = `${temp}°C`;
+                weatherInfo.querySelector('.condition').textContent = conditions[code] || "Unknown";
+                weatherInfo.querySelector('.forecast').textContent = `High: ${max}°C | Low: ${min}°C`;
             })
             .catch(() => {
                 const weatherInfo = document.getElementById('weather-info');
@@ -270,94 +203,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     weatherInfo.querySelector('.temp').textContent = "N/A";
                     weatherInfo.querySelector('.condition').textContent = "Unavailable";
                     weatherInfo.querySelector('.forecast').textContent = "";
-                    const forecast7 = document.getElementById('forecast-7day');
-                    if (forecast7) forecast7.textContent = "";
                 }
             });
     }
 
     updateWeather();
 });
-
-// Desktop Mode Toggle Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const desktopToggle = document.getElementById('desktop-toggle');
-    const body = document.body;
-    
-    // Check if desktop mode preference is stored
-    const isDesktopMode = localStorage.getItem('shadweb-desktop-mode') === 'true';
-    
-    // Apply desktop mode if previously enabled
-    if (isDesktopMode) {
-        body.classList.add('desktop-mode');
-        updateToggleButton(true);
-    }
-    
-    // Desktop mode toggle functionality
-    if (desktopToggle) {
-        desktopToggle.addEventListener('click', function() {
-            const isCurrentlyDesktop = body.classList.contains('desktop-mode');
-            
-            if (isCurrentlyDesktop) {
-                // Switch to mobile mode
-                body.classList.remove('desktop-mode');
-                localStorage.setItem('shadweb-desktop-mode', 'false');
-                updateToggleButton(false);
-            } else {
-                // Switch to desktop mode
-                body.classList.add('desktop-mode');
-                localStorage.setItem('shadweb-desktop-mode', 'true');
-                updateToggleButton(true);
-            }
-            
-            // Add a subtle transition effect
-            body.style.transition = 'all 0.3s ease';
-            setTimeout(() => {
-                body.style.transition = '';
-            }, 300);
-        });
-    }
-    
-    function updateToggleButton(isDesktopMode) {
-        const toggleIcon = desktopToggle.querySelector('.toggle-icon');
-        const toggleText = desktopToggle.querySelector('.toggle-text');
-        
-        if (isDesktopMode) {
-            toggleIcon.textContent = '💻';
-            toggleText.textContent = 'Mobile Mode';
-        } else {
-            toggleIcon.textContent = '📱';
-            toggleText.textContent = 'Desktop Mode';
-        }
-    }
-    
-    // Auto-detect screen size and suggest desktop mode for large screens
-    function checkScreenSize() {
-        const isLargeScreen = window.innerWidth >= 1200;
-        const hasUsedDesktopMode = localStorage.getItem('shadweb-desktop-mode') !== null;
-        
-        if (isLargeScreen && !hasUsedDesktopMode && desktopToggle) {
-            // Show a subtle hint for large screens
-            setTimeout(() => {
-                desktopToggle.style.animation = 'pulse 2s ease-in-out';
-                setTimeout(() => {
-                    desktopToggle.style.animation = '';
-                }, 2000);
-            }, 3000);
-        }
-    }
-    
-    // Check screen size on load and resize
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-});
-
-// Add pulse animation for the hint
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-`;
-document.head.appendChild(style);
