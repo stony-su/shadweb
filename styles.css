@@ -5,6 +5,127 @@
     box-sizing: border-box;
 }
 
+/* Retro Animation Styles */
+.retro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.retro-bar {
+    flex: 1;
+    background: #000;
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: retroBarSlide 0.8s ease-in-out forwards;
+}
+
+.retro-bar:nth-child(even) {
+    background: #fff;
+    animation-delay: 0.1s;
+}
+
+.retro-bar:nth-child(3n) {
+    animation-delay: 0.2s;
+}
+
+.retro-bar:nth-child(4n) {
+    animation-delay: 0.3s;
+}
+
+.retro-bar:nth-child(5n) {
+    animation-delay: 0.4s;
+}
+
+.retro-bar:nth-child(6n) {
+    animation-delay: 0.5s;
+}
+
+.retro-bar:nth-child(7n) {
+    animation-delay: 0.6s;
+}
+
+.retro-bar:nth-child(8n) {
+    animation-delay: 0.7s;
+}
+
+@keyframes retroBarSlide {
+    0% {
+        transform: scaleY(0);
+    }
+    50% {
+        transform: scaleY(1);
+    }
+    100% {
+        transform: scaleY(0);
+    }
+}
+
+/* Mode switch animation */
+.mode-switch-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.mode-switch-bar {
+    flex: 1;
+    background: #000;
+    transform: scaleY(0);
+    transform-origin: center;
+    animation: modeSwitchSlide 0.6s ease-in-out forwards;
+}
+
+.mode-switch-bar:nth-child(even) {
+    background: #fff;
+    animation-delay: 0.05s;
+}
+
+.mode-switch-bar:nth-child(3n) {
+    animation-delay: 0.1s;
+}
+
+.mode-switch-bar:nth-child(4n) {
+    animation-delay: 0.15s;
+}
+
+.mode-switch-bar:nth-child(5n) {
+    animation-delay: 0.2s;
+}
+
+.mode-switch-bar:nth-child(6n) {
+    animation-delay: 0.25s;
+}
+
+@keyframes modeSwitchSlide {
+    0% {
+        transform: scaleY(0);
+    }
+    50% {
+        transform: scaleY(1);
+    }
+    100% {
+        transform: scaleY(0);
+    }
+}
+
+/* Hide body content during animations */
+body.animating {
+    overflow: hidden;
+}
+
 body {
     font-family: 'Times New Roman', serif;
     line-height: 1.4;
