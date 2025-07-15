@@ -256,12 +256,14 @@
         </div>
     </div>
 
-    <script>
-        // Photo data for July 1 - Camera B
+        <script>
+        // Photo data for july-1-camera-b
         const photos = [{'src': '../pictures/July 1 Camera B/DSCF0085.JPG', 'alt': 'DSCF0085.JPG'}, {'src': '../pictures/July 1 Camera B/DSCF0086.JPG', 'alt': 'DSCF0086.JPG'}, {'src': '../pictures/July 1 Camera B/DSCF0089.JPG', 'alt': 'DSCF0089.JPG'}, {'src': '../pictures/July 1 Camera B/DSCF0090.JPG', 'alt': 'DSCF0090.JPG'}, {'src': '../pictures/July 1 Camera B/DSCF0091.JPG', 'alt': 'DSCF0091.JPG'}, {'src': '../pictures/July 1 Camera B/DSCF0092.JPG', 'alt': 'DSCF0092.JPG'}, {'src': '../pictures/July 1 Camera B/DSCF0093.JPG', 'alt': 'DSCF0093.JPG'}, {'src': '../pictures/July 1 Camera B/DSCF0094.JPG', 'alt': 'DSCF0094.JPG'}];
         
         let loadedImages = new Set();
         let currentModalIndex = 0;
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
 
         // Modal functionality
         const modal = document.getElementById('photo-modal');
@@ -304,7 +306,8 @@
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
-            });
+            }
+        });
 
         // Keyboard navigation
         document.addEventListener('keydown', function(e) {
@@ -320,9 +323,8 @@
                         showNextImage();
                         break;
                 }
-            });
-        let currentBatch = 0;
-        const batchSize = 6; // Load 6 images at a time
+            }
+        });
 
         function createPhotoElement(photo, index) {
             const photoItem = document.createElement('div');
@@ -340,7 +342,6 @@
             
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
-            
             
             // Add click event for modal
             photoItem.addEventListener('click', function() {
@@ -453,6 +454,6 @@
                 }
             }, 2000);
         });
-    </script>
+    </script>>
 </body>
 </html>

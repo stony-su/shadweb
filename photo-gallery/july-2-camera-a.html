@@ -257,12 +257,14 @@
         </div>
     </div>
 
-    <script>
-        // Photo data for July 2 - Camera A
+        <script>
+        // Photo data for july-2-camera-a
         const photos = [{'src': '../pictures/July 2 Camera A/DSCF0094.JPG', 'alt': 'DSCF0094.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0095.JPG', 'alt': 'DSCF0095.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0096.JPG', 'alt': 'DSCF0096.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0097.JPG', 'alt': 'DSCF0097.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0098.JPG', 'alt': 'DSCF0098.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0099.JPG', 'alt': 'DSCF0099.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0100.JPG', 'alt': 'DSCF0100.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0101.JPG', 'alt': 'DSCF0101.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0102.JPG', 'alt': 'DSCF0102.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0103.JPG', 'alt': 'DSCF0103.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0104.JPG', 'alt': 'DSCF0104.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0105.JPG', 'alt': 'DSCF0105.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0106.JPG', 'alt': 'DSCF0106.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0107.JPG', 'alt': 'DSCF0107.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0108.JPG', 'alt': 'DSCF0108.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0109.JPG', 'alt': 'DSCF0109.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0110.JPG', 'alt': 'DSCF0110.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0111.JPG', 'alt': 'DSCF0111.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0112.JPG', 'alt': 'DSCF0112.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0113.JPG', 'alt': 'DSCF0113.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0114.JPG', 'alt': 'DSCF0114.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0115.JPG', 'alt': 'DSCF0115.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0116.JPG', 'alt': 'DSCF0116.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0117.JPG', 'alt': 'DSCF0117.JPG'}, {'src': '../pictures/July 2 Camera A/DSCF0118.JPG', 'alt': 'DSCF0118.JPG'}];
         
         let loadedImages = new Set();
         let currentModalIndex = 0;
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
 
         // Modal functionality
         const modal = document.getElementById('photo-modal');
@@ -324,8 +326,6 @@
                 }
             }
         });
-        let currentBatch = 0;
-        const batchSize = 6; // Load 6 images at a time
 
         function createPhotoElement(photo, index) {
             const photoItem = document.createElement('div');
@@ -455,6 +455,6 @@
                 }
             }, 2000);
         });
-    </script>
+    </script>>
 </body>
 </html>

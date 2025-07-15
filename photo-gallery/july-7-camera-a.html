@@ -256,12 +256,14 @@
         </div>
     </div>
 
-    <script>
-        // Photo data for July 7 - Camera A
+        <script>
+        // Photo data for july-7-camera-a
         const photos = [{'src': '../pictures/July 7 Camera A/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 7 Camera A/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 7 Camera A/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 7 Camera A/DSCF0011.JPG', 'alt': 'DSCF0011.JPG'}, {'src': '../pictures/July 7 Camera A/DSCF0015.JPG', 'alt': 'DSCF0015.JPG'}, {'src': '../pictures/July 7 Camera A/DSCF0016.JPG', 'alt': 'DSCF0016.JPG'}, {'src': '../pictures/July 7 Camera A/DSCF0017.JPG', 'alt': 'DSCF0017.JPG'}];
         
         let loadedImages = new Set();
         let currentModalIndex = 0;
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
 
         // Modal functionality
         const modal = document.getElementById('photo-modal');
@@ -304,7 +306,8 @@
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
-            });
+            }
+        });
 
         // Keyboard navigation
         document.addEventListener('keydown', function(e) {
@@ -320,9 +323,8 @@
                         showNextImage();
                         break;
                 }
-            });
-        let currentBatch = 0;
-        const batchSize = 6; // Load 6 images at a time
+            }
+        });
 
         function createPhotoElement(photo, index) {
             const photoItem = document.createElement('div');
@@ -340,7 +342,6 @@
             
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
-            
             
             // Add click event for modal
             photoItem.addEventListener('click', function() {
@@ -453,6 +454,6 @@
                 }
             }, 2000);
         });
-    </script>
+    </script>>
 </body>
 </html>
