@@ -256,8 +256,8 @@
         </div>
     </div>
 
-    <script>
-        // Photo data for Photos From Staff
+        <script>
+        // Photo data for photos-from-staff
         const photos = [
             { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250701_171729.jpg', alt: 'Staff Photo 20250701_171729' },
             { src: '../pictures/Photos From Staff-20250711T010436Z-1-001/Photos From Staff/20250701_171738.jpg', alt: 'Staff Photo 20250701_171738' },
@@ -331,6 +331,8 @@
         
         let loadedImages = new Set();
         let currentModalIndex = 0;
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
 
         // Modal functionality
         const modal = document.getElementById('photo-modal');
@@ -392,8 +394,6 @@
                 }
             }
         });
-        let currentBatch = 0;
-        const batchSize = 6; // Load 6 images at a time
 
         function createPhotoElement(photo, index) {
             const photoItem = document.createElement('div');
@@ -411,7 +411,6 @@
             
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
-            
             
             // Add click event for modal
             photoItem.addEventListener('click', function() {
@@ -524,6 +523,6 @@
                 }
             }, 2000);
         });
-    </script>
+    </script>>
 </body>
 </html> 
