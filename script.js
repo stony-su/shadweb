@@ -61,12 +61,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to handle scroll events
     function handleScroll() {
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
         // Check if user has scrolled to the bottom
         const windowHeight = window.innerHeight;
         const documentHeight = document.documentElement.scrollHeight;
         const scrolledToBottom = windowHeight + scrollTop >= documentHeight - 10; // 10px threshold
-        
         // Trigger shake animation when reaching bottom
         if (scrolledToBottom && !shakeTriggered) {
             triggerShakeAnimation();
@@ -74,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (!scrolledToBottom) {
             shakeTriggered = false; // Reset when not at bottom
         }
-        
         // Only hide/show header if we've scrolled more than the threshold
         if (Math.abs(scrollTop - lastScrollTop) > scrollThreshold) {
             if (scrollTop > lastScrollTop && scrollTop > 100) {
@@ -86,22 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             lastScrollTop = scrollTop;
         }
-    }
-    
-    // Function to trigger shake animation
-    function triggerShakeAnimation() {
-        const body = document.body;
-        
-        // Add shake class to trigger animation
-        body.classList.add('shake');
-        
-        // Remove the class after animation completes to allow re-triggering
-        setTimeout(() => {
-            body.classList.remove('shake');
-        }, 500); // Match the animation duration (0.5s)
-        
-        // Optional: Add a subtle sound effect or haptic feedback
-        console.log('Screen shake triggered!');
     }
     
     // Add scroll event listener with throttling for better performance
@@ -213,29 +194,36 @@ document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('scroll', requestTick);
         }
     });
-});
 
-// Weather API integration
+    // Function to trigger shake animation
+    function triggerShakeAnimation() {
+        const body = document.body;
+        // Add shake class to trigger animation
+        body.classList.add('shake');
+        // Remove the class after animation completes to allow re-triggering
+        setTimeout(() => {
+            body.classList.remove('shake');
+        }, 500); // Match the animation duration (0.5s)
+        // Optional: Add a subtle sound effect or haptic feedback
+        console.log('Screen shake triggered!');
+    }
+});
+// WEATHER WIDGET
 document.addEventListener('DOMContentLoaded', function() {
-    // Weather API (Open-Meteo example, no API key required)
     function updateWeather() {
-        // Waterloo, ON coordinates
+        // Waterloo coordinates
         const lat = 43.4643;
         const lon = -80.5204;
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=America%2FToronto`;
-
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
         fetch(url)
             .then(response => response.json())
             .then(data => {
                 const weatherInfo = document.getElementById('weather-info');
                 if (!weatherInfo || !data.current_weather) return;
-
                 const temp = Math.round(data.current_weather.temperature);
                 const code = data.current_weather.weathercode;
                 const max = Math.round(data.daily.temperature_2m_max[0]);
                 const min = Math.round(data.daily.temperature_2m_min[0]);
-
-                // Simple weather code mapping
                 const conditions = {
                     0: "Clear",
                     1: "Mainly Clear",
@@ -246,15 +234,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     51: "Light Drizzle",
                     53: "Drizzle",
                     55: "Dense Drizzle",
-                    61: "Light Rain",
+                    56: "Freezing Drizzle",
+                    57: "Dense Freezing Drizzle",
+                    61: "Slight Rain",
                     63: "Rain",
                     65: "Heavy Rain",
-                    71: "Light Snow",
+                    66: "Freezing Rain",
+                    67: "Heavy Freezing Rain",
+                    71: "Slight Snow",
                     73: "Snow",
                     75: "Heavy Snow",
-                    80: "Rain Showers",
-                    81: "Rain Showers",
-                    82: "Violent Rain Showers",
+                    77: "Snow Grains",
+                    80: "Slight Showers",
+                    81: "Showers",
+                    82: "Violent Showers",
+                    85: "Slight Snow Showers",
+                    86: "Heavy Snow Showers",
                     95: "Thunderstorm"
                 };
 
@@ -298,6 +293,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     html += '</div>';
                     forecast7.innerHTML = html;
                 }
+                weatherInfo.querySelector('.temp').textContent = `${temp}°C`;
+                weatherInfo.querySelector('.condition').textContent = conditions[code] || "Unknown";
+                weatherInfo.querySelector('.forecast').textContent = `High: ${max}°C | Low: ${min}°C`;
             })
             .catch(() => {
                 const weatherInfo = document.getElementById('weather-info');
@@ -310,60 +308,101 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     }
-
     updateWeather();
 });
+// Retro animation functions
+function createRetroOverlay(className, barClassName) {
+    const overlay = document.createElement('div');
+    overlay.className = className;
+    // Create 12 bars for the animation
+    for (let i = 0; i < 12; i++) {
+        const bar = document.createElement('div');
+        bar.className = barClassName;
+        overlay.appendChild(bar);
+    }
+    return overlay;
+}
+
+function triggerRetroAnimation() {
+    const body = document.body;
+    body.classList.add('animating');
+    const overlay = createRetroOverlay('retro-overlay', 'retro-bar');
+    document.body.appendChild(overlay);
+    // Remove overlay after animation completes
+    setTimeout(() => {
+        if (overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+        }
+        body.classList.remove('animating');
+    }, 1200); // Slightly longer than animation duration
+}
+
+function triggerModeSwitchAnimation() {
+    const body = document.body;
+    body.classList.add('animating');
+    const overlay = createRetroOverlay('mode-switch-overlay', 'mode-switch-bar');
+    document.body.appendChild(overlay);
+    // Remove overlay after animation completes
+    setTimeout(() => {
+        if (overlay.parentNode) {
+            overlay.parentNode.removeChild(overlay);
+        }
+        body.classList.remove('animating');
+    }, 800); // Slightly longer than animation duration
+}
+
+// Set current date
+function setCurrentDate() {
+    const dateElement = document.querySelector('.date');
+    if (dateElement) {
+        const today = new Date();
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        const formattedDate = today.toLocaleDateString('en-US', options);
+        dateElement.textContent = formattedDate;
+    }
+}
 
 // Desktop Mode Toggle Functionality
 document.addEventListener('DOMContentLoaded', function() {
     const desktopToggle = document.getElementById('desktop-toggle');
     const body = document.body;
-    
-    // Retro animation functions for mode switching
-    function createRetroOverlay(className, barClassName) {
-        const overlay = document.createElement('div');
-        overlay.className = className;
-        
-        // Create 12 bars for the animation
-        for (let i = 0; i < 12; i++) {
-            const bar = document.createElement('div');
-            bar.className = barClassName;
-            overlay.appendChild(bar);
-        }
-        
-        return overlay;
-    }
-    
-    function triggerModeSwitchAnimation() {
-        const body = document.body;
-        body.classList.add('animating');
-        
-        const overlay = createRetroOverlay('mode-switch-overlay', 'mode-switch-bar');
-        document.body.appendChild(overlay);
-        
-        // Remove overlay after animation completes
-        setTimeout(() => {
-            if (overlay.parentNode) {
-                overlay.parentNode.removeChild(overlay);
-            }
-            body.classList.remove('animating');
-        }, 800); // Slightly longer than animation duration
-    }
-    
     // Check if desktop mode preference is stored
     const isDesktopMode = localStorage.getItem('shadweb-desktop-mode') === 'true';
-    
     // Apply desktop mode if previously enabled
     if (isDesktopMode) {
         body.classList.add('desktop-mode');
+        updateToggleButton(true);
     }
-    
+    // Desktop mode toggle functionality
+    if (desktopToggle) {
+        desktopToggle.addEventListener('click', function() {
+            triggerModeSwitchAnimation();
+            const isCurrentlyDesktop = body.classList.contains('desktop-mode');
+            if (isCurrentlyDesktop) {
+                // Switch to mobile mode
+                body.classList.remove('desktop-mode');
+                localStorage.setItem('shadweb-desktop-mode', 'false');
+                updateToggleButton(false);
+            } else {
+                // Switch to desktop mode
+                body.classList.add('desktop-mode');
+                localStorage.setItem('shadweb-desktop-mode', 'true');
+                updateToggleButton(true);
+            }
+            // Add a subtle transition effect
+            body.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                body.style.transition = '';
+            }, 300);
+        });
+    }
     function updateToggleButton(isDesktopMode) {
-        if (!desktopToggle) return;
-        
         const toggleIcon = desktopToggle.querySelector('.toggle-icon');
         const toggleText = desktopToggle.querySelector('.toggle-text');
-        
         if (isDesktopMode) {
             toggleIcon.textContent = '💻';
             toggleText.textContent = 'Mobile Mode';
@@ -372,48 +411,10 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleText.textContent = 'Desktop Mode';
         }
     }
-    
-    // Initialize button state
-    updateToggleButton(isDesktopMode);
-    
-    // Desktop mode toggle functionality
-    if (desktopToggle) {
-        desktopToggle.addEventListener('click', function() {
-            const isCurrentlyDesktop = body.classList.contains('desktop-mode');
-            
-            // Trigger mode switch animation first
-            triggerModeSwitchAnimation();
-            
-            // Delay the actual mode switch to allow animation to start
-            setTimeout(() => {
-                if (isCurrentlyDesktop) {
-                    // Switch to mobile mode
-                    body.classList.remove('desktop-mode');
-                    localStorage.setItem('shadweb-desktop-mode', 'false');
-                    updateToggleButton(false);
-                } else {
-                    // Switch to desktop mode
-                    body.classList.add('desktop-mode');
-                    localStorage.setItem('shadweb-desktop-mode', 'true');
-                    updateToggleButton(true);
-                }
-                
-                // Add a subtle transition effect
-                body.style.transition = 'all 0.3s ease';
-                setTimeout(() => {
-                    body.style.transition = '';
-                }, 300);
-            }, 100); // Small delay to let animation start
-        });
-    }
-    
-
-    
     // Auto-detect screen size and suggest desktop mode for large screens
     function checkScreenSize() {
         const isLargeScreen = window.innerWidth >= 1200;
         const hasUsedDesktopMode = localStorage.getItem('shadweb-desktop-mode') !== null;
-        
         if (isLargeScreen && !hasUsedDesktopMode && desktopToggle) {
             // Show a subtle hint for large screens
             setTimeout(() => {
@@ -424,18 +425,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
         }
     }
-    
     // Check screen size on load and resize
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
 });
-
-// Add pulse animation for the hint
+// Add pulse and shake animation for the hint
 const style = document.createElement('style');
 style.textContent = `
+    @keyframes shake {
+        0% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+        20%, 40%, 60%, 80% { transform: translateX(10px); }
+        100% { transform: translateX(0); }
+    }
+    .shake {
+        animation: shake 0.5s;
+    }
     @keyframes pulse {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.05); }
     }
 `;
-document.head.appendChild(style);
+document.head.appendChild(style); 
