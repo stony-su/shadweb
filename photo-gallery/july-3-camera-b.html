@@ -256,12 +256,14 @@
         </div>
     </div>
 
-    <script>
-        // Photo data for July 3 - Camera B
+        <script>
+        // Photo data for july-3-camera-b
         const photos = [{'src': '../pictures/July 3 Camera B/DSCF0001.JPG', 'alt': 'DSCF0001.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0002.JPG', 'alt': 'DSCF0002.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0003.JPG', 'alt': 'DSCF0003.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0004.JPG', 'alt': 'DSCF0004.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0008.JPG', 'alt': 'DSCF0008.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0009.JPG', 'alt': 'DSCF0009.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0010.JPG', 'alt': 'DSCF0010.JPG'}, {'src': '../pictures/July 3 Camera B/DSCF0011.JPG', 'alt': 'DSCF0011.JPG'}];
         
         let loadedImages = new Set();
         let currentModalIndex = 0;
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
 
         // Modal functionality
         const modal = document.getElementById('photo-modal');
@@ -304,7 +306,8 @@
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
-            });
+            }
+        });
 
         // Keyboard navigation
         document.addEventListener('keydown', function(e) {
@@ -320,9 +323,8 @@
                         showNextImage();
                         break;
                 }
-            });
-        let currentBatch = 0;
-        const batchSize = 6; // Load 6 images at a time
+            }
+        });
 
         function createPhotoElement(photo, index) {
             const photoItem = document.createElement('div');
@@ -340,7 +342,6 @@
             
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
-            
             
             // Add click event for modal
             photoItem.addEventListener('click', function() {
@@ -453,6 +454,6 @@
                 }
             }, 2000);
         });
-    </script>
+    </script>>
 </body>
 </html>

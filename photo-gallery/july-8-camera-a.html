@@ -256,12 +256,14 @@
         </div>
     </div>
 
-    <script>
-        // Photo data for July 8 - Camera A
+        <script>
+        // Photo data for july-8-camera-a
         const photos = [{'src': '../pictures/July 8 Camera A/DSCF0002.JPG', 'alt': 'DSCF0002.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0003.JPG', 'alt': 'DSCF0003.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0004.JPG', 'alt': 'DSCF0004.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0005.JPG', 'alt': 'DSCF0005.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0006.JPG', 'alt': 'DSCF0006.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0007.JPG', 'alt': 'DSCF0007.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0008.JPG', 'alt': 'DSCF0008.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0009.JPG', 'alt': 'DSCF0009.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0010.JPG', 'alt': 'DSCF0010.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0012.JPG', 'alt': 'DSCF0012.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0013.JPG', 'alt': 'DSCF0013.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0014.JPG', 'alt': 'DSCF0014.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0016.JPG', 'alt': 'DSCF0016.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0018.JPG', 'alt': 'DSCF0018.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0019.JPG', 'alt': 'DSCF0019.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0021.JPG', 'alt': 'DSCF0021.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0023.JPG', 'alt': 'DSCF0023.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0024.JPG', 'alt': 'DSCF0024.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0025.JPG', 'alt': 'DSCF0025.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0026.JPG', 'alt': 'DSCF0026.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0027.JPG', 'alt': 'DSCF0027.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0028.JPG', 'alt': 'DSCF0028.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0030.JPG', 'alt': 'DSCF0030.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0031.JPG', 'alt': 'DSCF0031.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0032.JPG', 'alt': 'DSCF0032.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0033.JPG', 'alt': 'DSCF0033.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0034.JPG', 'alt': 'DSCF0034.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0035.JPG', 'alt': 'DSCF0035.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0036.JPG', 'alt': 'DSCF0036.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0037.JPG', 'alt': 'DSCF0037.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0039.JPG', 'alt': 'DSCF0039.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0040.JPG', 'alt': 'DSCF0040.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0041.JPG', 'alt': 'DSCF0041.JPG'}, {'src': '../pictures/July 8 Camera A/DSCF0042.JPG', 'alt': 'DSCF0042.JPG'}];
         
         let loadedImages = new Set();
         let currentModalIndex = 0;
+        let currentBatch = 0;
+        const batchSize = 6; // Load 6 images at a time
 
         // Modal functionality
         const modal = document.getElementById('photo-modal');
@@ -304,7 +306,8 @@
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
-            });
+            }
+        });
 
         // Keyboard navigation
         document.addEventListener('keydown', function(e) {
@@ -320,9 +323,8 @@
                         showNextImage();
                         break;
                 }
-            });
-        let currentBatch = 0;
-        const batchSize = 6; // Load 6 images at a time
+            }
+        });
 
         function createPhotoElement(photo, index) {
             const photoItem = document.createElement('div');
@@ -340,7 +342,6 @@
             
             photoItem.appendChild(img);
             photoItem.appendChild(placeholder);
-            
             
             // Add click event for modal
             photoItem.addEventListener('click', function() {
@@ -453,6 +454,6 @@
                 }
             }, 2000);
         });
-    </script>
+    </script>>
 </body>
 </html>
