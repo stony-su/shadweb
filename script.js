@@ -446,4 +446,40 @@ style.textContent = `
         50% { transform: scale(1.05); }
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);
+
+// Desktop logo spin functionality with sound effects
+document.addEventListener('DOMContentLoaded', function() {
+    const desktopLogo = document.getElementById('desktop-logo');
+    
+    // Array of sound files to cycle through
+    const soundFiles = [
+        'slabsfx/pronunciation_en_slab.mp3',
+        'slabsfx/pronunciation_hr_slab.mp3',
+        'slabsfx/pronunciation_ro_slab.mp3',
+        'slabsfx/pronunciation_sl_slab.mp3'
+    ];
+    
+    let currentSoundIndex = 0;
+    
+    if (desktopLogo) {
+        desktopLogo.addEventListener('click', function() {
+            // Add spinning class to trigger animation
+            this.classList.add('spinning');
+            
+            // Play sound effect
+            const audio = new Audio(soundFiles[currentSoundIndex]);
+            audio.play().catch(error => {
+                console.log('Audio playback failed:', error);
+            });
+            
+            // Cycle to next sound file
+            currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+            
+            // Remove the spinning class after animation completes
+            setTimeout(() => {
+                this.classList.remove('spinning');
+            }, 1000); // Match the animation duration (1s)
+        });
+    }
+}); 
