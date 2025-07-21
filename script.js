@@ -452,29 +452,95 @@ document.head.appendChild(style);
 document.addEventListener('DOMContentLoaded', function() {
     const desktopLogo = document.getElementById('desktop-logo');
     
-    // Array of sound files to cycle through
-    const soundFiles = [
-        'slabsfx/pronunciation_en_slab.mp3',
-        'slabsfx/pronunciation_hr_slab.mp3',
-        'slabsfx/pronunciation_ro_slab.mp3',
-        'slabsfx/pronunciation_sl_slab.mp3'
-    ];
-    
+    // Array to store all sound files from slabsfx directory
+    let soundFiles = [];
     let currentSoundIndex = 0;
     
+    // Function to load all sound files from slabsfx directory
+    async function loadSoundFiles() {
+        try {
+            // List of all sound files in slabsfx directory
+            const soundFileList = [
+                'slabsfx/Record (online-voice-recorder.com) (37).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (36).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (35).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (34).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (33).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (32).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (31).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (30).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (29).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (28).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (27).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (26).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (25).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (24).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (23).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (22).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (21).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (20).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (19).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (18).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (17).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (16).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (15).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (14).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (13).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (12).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (11).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (10).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (9).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (8).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (7).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (6).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (5).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (4).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (3).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (2).mp3',
+                'slabsfx/Record (online-voice-recorder.com) (1).mp3',
+                'slabsfx/Record (online-voice-recorder.com).mp3',
+                'slabsfx/daniel.mp3',
+                'slabsfx/ruibo slab.mp3',
+                'slabsfx/bruce.mp3',
+                'slabsfx/slab rando.mp3',
+                'slabsfx/michael slab.mp3',
+                'slabsfx/jesse slab.mp3'
+            ];
+            
+            // Filter out any files that might not exist and add them to the array
+            soundFiles = soundFileList.filter(file => file);
+            console.log(`Loaded ${soundFiles.length} sound files`);
+        } catch (error) {
+            console.error('Error loading sound files:', error);
+            // Fallback to a few known files if loading fails
+            soundFiles = [
+                'slabsfx/daniel.mp3',
+                'slabsfx/ruibo slab.mp3',
+                'slabsfx/bruce.mp3',
+                'slabsfx/michael slab.mp3',
+                'slabsfx/jesse slab.mp3'
+            ];
+        }
+    }
+    
     if (desktopLogo) {
+        // Load sound files when the page loads
+        loadSoundFiles();
+        
         desktopLogo.addEventListener('click', function() {
             // Add spinning class to trigger animation
             this.classList.add('spinning');
             
-            // Play sound effect
-            const audio = new Audio(soundFiles[currentSoundIndex]);
-            audio.play().catch(error => {
-                console.log('Audio playback failed:', error);
-            });
-            
-            // Cycle to next sound file
-            currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+            // Play sound effect if we have sound files loaded
+            if (soundFiles.length > 0) {
+                const audio = new Audio(soundFiles[currentSoundIndex]);
+                audio.play().catch(error => {
+                    console.log('Audio playback failed:', error);
+                });
+                
+                // Cycle to next sound file
+                currentSoundIndex = (currentSoundIndex + 1) % soundFiles.length;
+            }
             
             // Remove the spinning class after animation completes
             setTimeout(() => {

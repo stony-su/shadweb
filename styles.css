@@ -786,6 +786,10 @@ body.desktop-mode .desktop-sections-container {
 }
 
 /* Desktop logo container */
+.desktop-logo-container {
+    display: none; /* Hide by default in mobile mode */
+}
+
 body.desktop-mode .desktop-logo-container {
     display: flex;
     justify-content: center;
